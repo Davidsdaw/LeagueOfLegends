@@ -9,11 +9,11 @@
 
 <body>
     <?php
-    function connect_agenda()
+    function connect_bd()
     {
         global $pdo;
         try {
-            $pdo = new PDO('mysql:host=localhost;dbname=agenda', 'daw2', 'daw2');
+            $pdo = new PDO('mysql:host=localhost;dbname=LeagueOfLegends', 'admin', 'admin');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->exec('SET NAMES "utf8"');
             echo '<h4>Conexión establecida</h4>';
@@ -25,14 +25,14 @@
     {
         global $pdo;
         try {
-            $filasInsertadas = $pdo->exec("INSERT INTO agenda
-            VALUES(NULL,'José','Sánchez','jose@gmail.com','11111111')");
+            $filasInsertadas = $pdo->exec("INSERT INTO tabla
+            VALUES( valores )");
             echo "Se han añadido $filasInsertadas filas<br />";
         } catch (PDOException $excepcion) {
             echo "Error en la inserción de tipo " . $excepcion->getMessage();
         }
         try {
-            $sql = "SELECT * FROM agenda";
+            $sql = "SELECT * FROM tabla";
             $lista = $pdo->query($sql);
             echo "<h4>Lista de contactos</h4>";
             while ($contacto = $lista->fetch()) {
@@ -49,8 +49,8 @@
     {
         global $pdo;
         try {
-            $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE
-            emailContacto='jose@gmail.com'";
+            $sql = "UPDATE tabla SET campo='valor' WHERE
+            capo='valor'";
             $filasModificadas = $pdo->exec($sql);
             echo "Se han modificado $filasModificadas filas<br/>";
         } catch (PDOException $excepcion) {
