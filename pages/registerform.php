@@ -12,7 +12,6 @@
     <?php
     include 'funciones.php';
     connect_bd();
-    session_start();
     $error = '&nbsp';
     if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['email'])) {
         $usuario = $_POST['usuario'];

@@ -12,7 +12,6 @@
     <?php
     include 'pages/funciones.php';
     connect_bd();
-    session_start();
     $error = '&nbsp';
     if (isset($_POST['usuario']) && isset($_POST['password'])) {
         $usuario = $_POST['usuario'];
