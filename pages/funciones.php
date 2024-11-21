@@ -16,7 +16,7 @@
             $pdo = new PDO('mysql:host=localhost;dbname=LeagueOfLegends', 'admin', 'admin');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->exec('SET NAMES "utf8"');
-            // echo '<h4>Conexión establecida</h4>';
+            echo '<h4>Conexión establecida</h4>';
         } catch (PDOException $e) {
             // echo 'Error en la conexión: ' . $e->getMessage();
         }
@@ -53,6 +53,34 @@
             capo='valor'";
             $filasModificadas = $pdo->exec($sql);
             echo "Se han modificado $filasModificadas filas<br/>";
+        } catch (PDOException $excepcion) {
+            echo "Error en la modificación de tipo " . $excepcion->getMessage();
+        }
+    }
+
+
+    function comprobarlogin($usuario, $password)
+    {
+        global $pdo;
+        try {
+            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND password LIKE $password";
+            $resultado = $pdo->query($qry);
+            while ($resultado->fetch()) {
+                return true;
+            }
+        } catch (PDOException $excepcion) {
+            echo "Usuario o contraseña incorrecto";
+        }
+    }
+
+    function registrarusuario($usuario, $password, $email)
+    {
+        global $pdo;
+        try {
+            $qry = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email') COMMIT";
+            $pdo->exec($qry);
+            header("Location: paginamain.php");
+            exit();
         } catch (PDOException $excepcion) {
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
         }

@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>LeagueOfLegends</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <?php
-    include 'pages/funciones.php';
+    include 'funciones.php';
     connect_bd();
     ?>
     <div class="session">
@@ -27,11 +27,15 @@
                 <input placeholder="Contraseña" type="password" name="password" id="password" autocomplete="off" required>
                 <label for="password">Contraseña:</label>
             </div>
+            <div class="floating-label">
+                <input placeholder="Email" type="email" name="email" id="email" autocomplete="off" required>
+                <label for="email">Email:</label>
+            </div>
             <?php
             if (isset($_POST['usuario']) && isset($_POST['password'])) {
                 $usuario = $_POST['usuario'];
                 $password = $_POST['password'];
-                comprobarlogin($usuario, $password);
+                registrarusuario($usuario, $password, $email);
             }
             ?>
             <button type="submit">Log in</button>
