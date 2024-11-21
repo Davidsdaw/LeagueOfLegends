@@ -9,6 +9,9 @@
 
 <body>
     <?php
+
+    session_start();
+
     function connect_bd()
     {
         global $pdo;
@@ -16,9 +19,9 @@
             $pdo = new PDO('mysql:host=localhost;dbname=LeagueOfLegends', 'admin', 'admin');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->exec('SET NAMES "utf8"');
-            echo '<h4>Conexión establecida</h4>';
+            // echo '<h4>Conexión establecida</h4>';
         } catch (PDOException $e) {
-            // echo 'Error en la conexión: ' . $e->getMessage();
+            echo 'Error en la conexión: ' . $e->getMessage();
         }
     }
     function insertar_agenda()
@@ -63,13 +66,15 @@
     {
         global $pdo;
         try {
-            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND password LIKE $password";
+            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND contraseña LIKE '$password'";
             $resultado = $pdo->query($qry);
-            while ($resultado->fetch()) {
+            if ($resultado->fetch()) {
                 return true;
+            } else {
+                return "Usuario o contraseña no valido";
             }
         } catch (PDOException $excepcion) {
-            echo "Usuario o contraseña incorrecto";
+            echo "Error en la modificación de tipo " . $excepcion->getMessage();
         }
     }
 
@@ -77,10 +82,15 @@
     {
         global $pdo;
         try {
-            $qry = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email') COMMIT";
-            $pdo->exec($qry);
-            header("Location: paginamain.php");
-            exit();
+            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
+            $resultado = $pdo->query($qry);
+            if ($resultado->fetch()) {
+                return "El usuario ya está en uso";
+            } else {
+                $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
+                $pdo->exec($qry2);
+                header("Location: paginamain.php");
+            }
         } catch (PDOException $excepcion) {
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
         }

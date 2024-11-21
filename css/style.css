@@ -29,34 +29,34 @@ label {
     font-weight: 400;
 }
 
-form {
-    padding: 40px 30px;
-    background: #fefefe;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 20px;
 
-    h4 {
-        margin-bottom: 20px;
-        color: rgba(#000, .5);
+h4 {
+    margin-bottom: 20px;
+    color: rgba(#000, .5);
 
-        span {
-            color: rgba(#000, 1);
-            font-weight: 700;
-        }
+    span {
+        color: rgba(#000, 1);
+        font-weight: 700;
     }
-
-    p {
-        line-height: 155%;
-        margin-bottom: 5px;
-        font-size: 14px;
-        color: #000;
-        opacity: .65;
-        font-weight: 400;
-        max-width: 200px;
-        margin-bottom: 40px;
-    }
+}
+.descripcion {
+    line-height: 155%;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #000;
+    opacity: .65;
+    font-weight: 400;
+    max-width: 300px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.error{
+    line-height: 155%;
+    font-size: 12px;
+    color: #ff0000;
+    opacity: .65;
+    font-weight: 400;
+    max-width: 200px;
 }
 
 a.discrete {
@@ -75,7 +75,7 @@ a.discrete {
 }
 
 button {
-    /* -webkit-appearance: none; */
+    -webkit-appearance: none;
     width: auto;
     min-width: 100px;
     border-radius: 24px;
@@ -94,11 +94,6 @@ button {
 
     &:hover {
         transform: translateY(-3px);
-        box-shadow: 0 2px 6px -1px rgba(red, .65);
-
-        &:active {
-            transform: scale(.99);
-        }
     }
 }
 
@@ -117,9 +112,8 @@ input {
     -webkit-appearance: none;
 
     &:focus {
-        border-bottom: solid 1px red;
+        border-bottom: solid 1px #483563;
         outline: 0;
-        box-shadow: 0 2px 6px -8px rgba(red, .45);
     }
 }
 
@@ -146,23 +140,71 @@ input {
 }
 
 .session {
+    position: relative;
+    top: 0;
+    left: 0;
     display: flex;
     flex-direction: row;
-    width: auto;
-    height: auto;
     margin: auto auto;
-    background: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, .12);
+    box-shadow: 0px 0px 20px 7px rgba(0, 0, 0, .12);
+    animation: sombra 3s ease-in-out;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+@keyframes sombra {
+    0%{
+        box-shadow: 0px 0px 20px 7px rgba(0, 0, 0, 0);
+    }
+    100%{
+        box-shadow: 0px 0px 20px 7px rgba(0, 0, 0, .12);
+    }
 }
 
 .left {
+    position: relative;
+    left: 0px;
+    z-index: 10;
     width: 220px;
     height: auto;
     min-height: 100%;
-    /* position: relative; */
     background-image: url("../assets/images/Katarina_21.jpg");
     background-size: cover;
+    background-position: center;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    animation: der 1s ease;
+    animation-fill-mode: forwards;
+}
+
+.log-in {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 40px 30px;
+    background: #fefefe;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    width: 350px;
+    animation: izq 1s ease;
+    animation-fill-mode: forwards;
+    z-index: 15;
+}
+
+@keyframes izq {
+    0%{
+        left: -200px;
+    }
+    100%{
+        left: 0px;
+    }
+}
+@keyframes der {
+    0%{
+        left: 200px;
+    }
+    100%{
+        left: 0px;
+    }
 }
