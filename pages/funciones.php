@@ -101,23 +101,19 @@
 
     function obtenerCuentasDisponibles()
     {
+        connect_bd();
         global $pdo;
 
         try {
             $query = "SELECT * FROM cuentas WHERE estado = 'disponible'";
-            $result = $pdo->query($query);
+            $statement = $pdo->prepare($query); // Usamos prepare para mayor seguridad
+            $statement->execute(); // Ejecutamos la consulta
 
-            $accounts = array();
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $accounts[] = $row;
-                }
-            }
-
+            $accounts = $statement->fetchAll(PDO::FETCH_ASSOC); // Obtenemos todos los resultados como un array asociativo
             return $accounts;
         } catch (PDOException $excepcion) {
-            echo "Error en la modificación de tipo " . $excepcion->getMessage();
+            echo "Error en la base de datos: " . $excepcion->getMessage();
+            return []; // En caso de error, devuelve un array vacío
         }
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2024 a las 20:16:28
+-- Tiempo de generación: 22-11-2024 a las 20:53:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,28 +29,32 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cuentas` (
   `id_cuenta` int(11) NOT NULL,
-  `juego` varchar(100) NOT NULL,
-  `nivel` varchar(50) NOT NULL,
+  `rp` int(100) NOT NULL,
+  `rango` varchar(50) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `estado` enum('disponible','vendido') DEFAULT 'disponible',
-  `fecha_creación` timestamp NOT NULL DEFAULT current_timestamp()
+  `be` int(11) NOT NULL,
+  `region` varchar(5) NOT NULL DEFAULT 'EUW',
+  `nivel` int(3) NOT NULL,
+  `campeones` int(11) NOT NULL,
+  `skins` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `cuentas`
 --
 
-INSERT INTO `cuentas` (`id_cuenta`, `juego`, `nivel`, `precio`, `estado`, `fecha_creación`) VALUES
-(1, 'League of Legends', 'Plata', 50.00, 'disponible', '2024-11-21 19:14:43'),
-(2, 'League of Legends', 'Oro', 80.00, 'disponible', '2024-11-21 19:14:43'),
-(3, 'League of Legends', 'Platino', 100.00, 'disponible', '2024-11-21 19:14:43'),
-(4, 'League of Legends', 'Diamante', 150.00, 'disponible', '2024-11-21 19:14:43'),
-(5, 'League of Legends', 'Oro', 60.00, 'disponible', '2024-11-21 19:14:43'),
-(6, 'League of Legends', 'Platino', 110.00, 'disponible', '2024-11-21 19:14:43'),
-(7, 'League of Legends', 'Oro', 75.00, 'disponible', '2024-11-21 19:14:43'),
-(8, 'League of Legends', 'Platino', 95.00, 'disponible', '2024-11-21 19:14:43'),
-(9, 'League of Legends', 'Diamante', 180.00, 'disponible', '2024-11-21 19:14:43'),
-(10, 'League of Legends', 'Oro', 65.00, 'disponible', '2024-11-21 19:14:43');
+INSERT INTO `cuentas` (`id_cuenta`, `rp`, `rango`, `precio`, `estado`, `be`, `region`, `nivel`, `campeones`, `skins`) VALUES
+(1, 3200, 'Plata', 55.00, 'disponible', 5000, 'EUW', 5, 10, 5),
+(2, 4500, 'Oro', 85.00, 'disponible', 7000, 'EUW', 10, 20, 15),
+(3, 6000, 'Platino', 105.00, 'vendido', 9000, 'EUW', 15, 30, 25),
+(4, 7500, 'Diamante', 155.00, 'disponible', 11000, 'EUW', 20, 40, 35),
+(5, 3600, 'Plata', 60.00, 'disponible', 5500, 'EUW', 6, 12, 7),
+(6, 5000, 'Oro', 90.00, 'disponible', 7500, 'EUW', 12, 24, 18),
+(7, 6500, 'Platino', 115.00, 'disponible', 9500, 'EUW', 17, 35, 27),
+(8, 8000, 'Diamante', 165.00, 'disponible', 11500, 'EUW', 22, 45, 37),
+(9, 3800, 'Oro', 70.00, 'disponible', 6000, 'EUW', 8, 16, 10),
+(10, 5500, 'Platino', 100.00, 'disponible', 8500, 'EUW', 14, 28, 20);
 
 -- --------------------------------------------------------
 
@@ -131,7 +135,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`) VALUES
+('a', 'a', 'R', 'a@a.a'),
 ('admin', '1234', 'A', 'admin@riberadeltajo.es'),
+('asd', 'asd', 'R', ''),
 ('registrado', '1234', 'R', 'registrado@riberadeltajo.es');
 
 --

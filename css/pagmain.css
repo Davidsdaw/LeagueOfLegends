@@ -1,0 +1,106 @@
+ body {
+     font-family: 'Poppins', sans-serif;
+     background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+     color: #ffffff;
+     margin: 0;
+     padding: 0;
+ }
+
+ h1 {
+     text-align: center;
+     margin: 20px;
+     font-size: 2.5rem;
+     color: #FFD700;
+     text-shadow: 2px 2px 8px #000;
+ }
+
+ #accounts-container {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     gap: 20px;
+     padding: 20px;
+ }
+
+ /* Card Styles */
+ .card {
+     background: linear-gradient(to bottom, #141E30, #243B55);
+     border-radius: 15px;
+     padding: 20px;
+     width: 350px;
+     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+     overflow: hidden;
+     position: relative;
+     transition: transform 0.3s ease, box-shadow 0.3s ease;
+     color: #e0e0e0;
+ }
+
+ .card:hover {
+     transform: scale(1.05);
+     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+ }
+
+ /* Text Styles */
+ .card p {
+     font-size: 1rem;
+     /* Tamaño del texto */
+     line-height: 1.6;
+     /* Espaciado entre líneas */
+     color: #e0e0e0;
+     /* Color de texto neutro */
+     margin: 8px 0;
+     /* Espaciado entre los párrafos */
+     text-align: left;
+     /* Alineación del texto */
+ }
+
+ .card p span {
+     font-weight: bold;
+     /* Resaltar el texto importante */
+     color: #FFD700;
+     /* Usar color dorado para los valores clave */
+ }
+
+ .card .highlight {
+     background: linear-gradient(to right, #FFD700, #FF4500);
+     color: #1c1c1c;
+     font-weight: bold;
+     text-align: center;
+     padding: 10px 15px;
+     border-radius: 8px;
+     margin-bottom: 10px;
+     font-size: 1.2rem;
+ }
+
+ .card .price {
+     background: linear-gradient(to right, #FFD700, #FF4500);
+     font-size: 1.5rem;
+     font-weight: bold;
+     text-align: center;
+     padding: 10px 0;
+     color: #1c1c1c;
+     border-radius: 5px;
+     margin: 15px 0;
+ }
+
+ /* Button */
+ .card button {
+     display: block;
+     background: linear-gradient(45deg, #FFD700, #FF4500);
+     color: #1c1c1c;
+     border: none;
+     padding: 10px 15px;
+     border-radius: 8px;
+     font-size: 1rem;
+     cursor: pointer;
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     margin-top: 10px;
+     transition: all 0.3s ease;
+     width: 100%;
+ }
+
+ .card button:hover {
+     background: linear-gradient(45deg, #FF4500, #FFD700);
+     transform: translateY(-2px);
+ }
