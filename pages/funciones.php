@@ -48,6 +48,7 @@
             echo "Error en la consulta de tipo " . $excepcion->getMessage();
         }
     }
+
     function modificar_tabla()
     {
         global $pdo;
@@ -96,7 +97,34 @@
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
         }
     }
+
+
+    function obtenerCuentasDisponibles()
+    {
+        global $pdo;
+
+        try {
+            $query = "SELECT * FROM cuentas WHERE estado = 'disponible'";
+            $result = $pdo->query($query);
+
+            $accounts = array();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $accounts[] = $row;
+                }
+            }
+
+            return $accounts;
+        } catch (PDOException $excepcion) {
+            echo "Error en la modificación de tipo " . $excepcion->getMessage();
+        }
+    }
+
     ?>
+
+
+
 </body>
 
 </html>
