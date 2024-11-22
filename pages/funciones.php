@@ -66,7 +66,7 @@
     {
         global $pdo;
         try {
-            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND contraseña LIKE '$password'";
+            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND password LIKE '$password'";
             $resultado = $pdo->query($qry);
             if ($resultado->fetch()) {
                 return true;
@@ -75,6 +75,7 @@
             }
         } catch (PDOException $excepcion) {
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
+            // return "Usuario o contraseña no valido";
         }
     }
 
