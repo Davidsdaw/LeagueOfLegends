@@ -139,10 +139,68 @@
         }
     }
 
+    function cargarDatosPerfil($usuario)
+    {
+        connect_bd();
+        global $pdo;
+
+        try {
+            $query = "SELECT * FROM usuarios WHERE user LIKE '$usuario'";
+            $statement = $pdo->prepare($query); // Usamos prepare para mayor seguridad
+            $statement->execute(); // Ejecutamos la consulta
+
+            $accounts = $statement->fetchAll(PDO::FETCH_ASSOC); // Obtenemos todos los resultados como un array asociativo
+            if ($accounts) {
+                $informacionPerfil[0] = $accounts[0]['user'];
+                $informacionPerfil[1] = $accounts[0]['password'];
+                $informacionPerfil[2] = $accounts[0]['mail'];
+                return $informacionPerfil;
+            }
+        } catch (PDOException $excepcion) {
+            echo "Error en la base de datos: " . $excepcion->getMessage();
+            return []; // En caso de error, devuelve un array vacío
+        }
+    }
+
+    function modificarPerfil($usuario, $password, $email)
+    {
+        connect_bd();
+        global $pdo;
+        if ($_SESSION['usuario'] == $usuario) {
+            try {
+                $qry = "UPDATE usuarios SET password = '$password', mail = '$email' WHERE user LIKE '$usuario'";
+                $statement = $pdo->prepare($qry);
+                $statement->execute();
+                // header("Location: paginamain.php");
+                logOut();
+            } catch (PDOException $excepcion) {
+                echo "Error en la modificación de tipo " . $excepcion->getMessage();
+            }
+        } else {
+            try {
+                $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
+                $statement2 = $pdo->prepare($qry2);
+                $statement2->execute();
+                $userOld = $_SESSION['usuario'];
+                $qry3 = "DELETE FROM usuarios WHERE user = '$userOld'";
+                $statement3 = $pdo->prepare($qry3);
+                $statement3->execute();
+                logOut();
+            } catch (PDOException $excepcion) {
+                echo "Error en la modificación de tipo " . $excepcion->getMessage();
+            }
+        }
+    }
+
+    function logOut()
+    {
+        $_SESSION = [];
+        session_destroy();
+        header("Location: ../index.php");
+    }
+
+
     ?>
-
-
-
 </body>
 
 </html>

@@ -10,10 +10,17 @@
 
 <body>
     <?php
+
+    include "funciones.php";
+    if (isset($_SESSION['token'])) {
+        header("Location: ../index.php");
+    }
+
+
     $resultado = [];
     $resultado2 = '';
     $resultadopw = '';
-    include 'funciones.php';
+
     connect_bd();
     $error = '&nbsp';
     if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['email'])) {

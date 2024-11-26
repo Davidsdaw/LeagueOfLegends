@@ -9,11 +9,16 @@
 </head>
 
 <body>
+    <?php
+    include "funciones.php";
+    if (isset($_SESSION['token'])) {
+    } else header("Location: ../index.php");
+
+    ?>
     <h1>Cuentas de League of Legends</h1>
     <div id="accounts-container">
 
         <?php
-        include "funciones.php";
         $accounts = obtenerCuentasDisponibles();
         foreach ($accounts as $cuenta) {
             echo "<div class='card'>

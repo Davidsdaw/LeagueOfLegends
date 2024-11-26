@@ -10,3 +10,4 @@ const botonLogin = document.getElementById("log");
 botonLogin.addEventListener("click", () => {
     sessionStorage.setItem("buttonClicked", "true");
 });
+
