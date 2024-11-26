@@ -24,44 +24,6 @@
             echo 'Error en la conexión: ' . $e->getMessage();
         }
     }
-    function insertar_agenda()
-    {
-        global $pdo;
-        try {
-            $filasInsertadas = $pdo->exec("INSERT INTO tabla
-            VALUES( valores )");
-            echo "Se han añadido $filasInsertadas filas<br />";
-        } catch (PDOException $excepcion) {
-            echo "Error en la inserción de tipo " . $excepcion->getMessage();
-        }
-        try {
-            $sql = "SELECT * FROM tabla";
-            $lista = $pdo->query($sql);
-            echo "<h4>Lista de contactos</h4>";
-            while ($contacto = $lista->fetch()) {
-                echo "Nombre: " . $contacto['nombreContacto'] . " " .
-                    $contacto['apellidosContacto'];
-                echo " Email: " . $contacto['emailContacto'];
-                echo " Teléfono: " . $contacto['tfnoContacto'] . "<br>";
-            }
-        } catch (PDOException $excepcion) {
-            echo "Error en la consulta de tipo " . $excepcion->getMessage();
-        }
-    }
-
-    function modificar_tabla()
-    {
-        global $pdo;
-        try {
-            $sql = "UPDATE tabla SET campo='valor' WHERE
-            capo='valor'";
-            $filasModificadas = $pdo->exec($sql);
-            echo "Se han modificado $filasModificadas filas<br/>";
-        } catch (PDOException $excepcion) {
-            echo "Error en la modificación de tipo " . $excepcion->getMessage();
-        }
-    }
-
 
     function comprobarlogin($usuario, $password)
     {
