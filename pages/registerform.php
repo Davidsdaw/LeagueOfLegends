@@ -10,6 +10,9 @@
 
 <body>
     <?php
+    $resultado = [];
+    $resultado2 = '';
+    $resultadopw = '';
     include 'funciones.php';
     connect_bd();
     $error = '&nbsp';
@@ -17,13 +20,15 @@
         $usuario = $_POST['usuario'];
         $password = $_POST['password'];
         $email = $_POST['email'];
-        
+
         $resultado = registrarusuario($usuario, $password, $email);
 
-        if ($resultado !== true) {
-            $error = $resultado;
-        } else {
-            
+        if ($resultado[0] != $email) {
+            $error = $resultado[1];
+        } else if ($resultado[1] != '') {
+            $resultado2 = $resultado[0];
+            $error = $resultado[1];
+            $resultadopw = $resultado[2];
         }
     }
     ?>
@@ -38,11 +43,11 @@
                 <label for="usuario">Usuario:</label>
             </div>
             <div class="floating-label">
-                <input placeholder="Contraseña" type="password" name="password" id="password" autocomplete="off" required>
+                <input placeholder="Contraseña" type="password" name="password" id="password" autocomplete="off" required <?php if ($resultadopw !== '') echo "value='$resultadopw'"; ?>>
                 <label for="password">Contraseña:</label>
             </div>
             <div class="floating-label">
-                <input placeholder="Email" type="email" name="email" id="email" autocomplete="off" required>
+                <input placeholder="Email" type="email" name="email" id="email" autocomplete="off" required <?php if ($resultado2 !== '') echo "value='$resultado2'"; ?>>
                 <label for="email">Email:</label>
             </div>
             <p class="error" id="error"><?php echo $error; ?></p>

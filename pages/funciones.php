@@ -66,17 +66,35 @@
     function comprobarlogin($usuario, $password)
     {
         global $pdo;
+        $returnuser = [];
         try {
-            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario' AND password LIKE '$password'";
-            $resultado = $pdo->query($qry);
-            if ($resultado->fetch()) {
-                return true;
+
+            $qry2 = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
+            $resultado2 = $pdo->query($qry2);
+            if ($resultado2->fetch()) {
+                $qry = "SELECT user,rol FROM usuarios WHERE user LIKE '$usuario' AND password LIKE '$password'";
+                $resultado = $pdo->query($qry);
+                $usuarioData = $resultado->fetch(PDO::FETCH_ASSOC);
+                if ($usuarioData) {
+                    $hora = date('H:i');
+                    $session_id = session_id();
+                    $token = hash('sha256', $hora . $session_id);
+                    $_SESSION['token'] = $token;
+                    $_SESSION["usuario"] = $usuario;
+                    $_SESSION["rol"] = $usuarioData['rol'];
+                    header("Location: pages/paginamain.php");
+                } else {
+                    $returnuser[0] = $usuario;
+                    $returnuser[1] = "Contraseña no valida";
+                    return $returnuser;
+                }
             } else {
-                return "Usuario o contraseña no valido";
+                $returnuser[0] = false;
+                $returnuser[1] = "Usuario no valido";
+                return $returnuser;
             }
         } catch (PDOException $excepcion) {
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
-            // return "Usuario o contraseña no valido";
         }
     }
 
@@ -87,7 +105,11 @@
             $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
             $resultado = $pdo->query($qry);
             if ($resultado->fetch()) {
-                return "El usuario ya está en uso";
+                $returnuser[0] = $email;
+                $returnuser[1] = "El usuario ya está en uso";
+                $returnuser[2] = $password;
+
+                return $returnuser;
             } else {
                 $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
                 $pdo->exec($qry2);

@@ -10,6 +10,8 @@
 
 <body>
     <?php
+    $resultado = [];
+    $resultado2 = '';
     include 'pages/funciones.php';
     connect_bd();
     $error = '&nbsp';
@@ -17,14 +19,15 @@
         $usuario = $_POST['usuario'];
         $password = $_POST['password'];
 
+
         $resultado = comprobarlogin($usuario, $password);
 
-        if ($resultado !== true) {
-            $error = $resultado;
-        } else {
-
+        if ($resultado[0] != $usuario) {
+            $error = $resultado[1];
+        } else if ($resultado[1] != '') {
+            $resultado2 = $resultado[0];
+            $error = $resultado[1];
         }
-
     }
     ?>
     <div class="session">
@@ -34,7 +37,8 @@
             <h4>Bienvenido</h4>
             <p class="descripcion">Encuentra las mejores ofertas o vende tus cuentas de forma segura y rápida</p>
             <div class="floating-label">
-                <input placeholder="Usuario" type="text" name="usuario" id="usuario" autocomplete="off" required>
+                <input placeholder="Usuario" type="text" name="usuario" id="usuario" autocomplete="off" required <?php if ($resultado2 !== '') echo "value='$resultado2'"; ?>>
+
                 <label for="usuario">Usuario:</label>
             </div>
             <div class="floating-label">
