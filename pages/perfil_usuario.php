@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil Usuario</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/perfil_usuario.css">
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
@@ -16,10 +17,10 @@
 
     $datosPerfil = cargarDatosPerfil($_SESSION['usuario']);
 
-    print_r($_POST);
-    if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['email'])) {
-        modificarPerfil($_POST['usuario'], $_POST['password'], $_POST['email']);
+    $error = '';
 
+    if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['email'])) {
+        $error = modificarPerfil($_POST['usuario'], $_POST['password'], $_POST['email']);
     }
 
     ?>
@@ -32,6 +33,11 @@
                 <label for="usuario" class="block text-sm font-medium">Usuario</label>
                 <input type="text" id="usuario" name="usuario" <?php if ($datosPerfil[0]) echo "value='$datosPerfil[0]'" ?>
                     class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500" />
+                <?php
+                if ($error != '') {
+                    echo '<p class="error">' . $error . ' </p>';
+                }
+                ?>
             </div>
 
             <!-- Correo público -->

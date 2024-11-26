@@ -178,14 +178,22 @@
             }
         } else {
             try {
-                $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
-                $statement2 = $pdo->prepare($qry2);
-                $statement2->execute();
-                $userOld = $_SESSION['usuario'];
-                $qry3 = "DELETE FROM usuarios WHERE user = '$userOld'";
+                $qry3 = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
                 $statement3 = $pdo->prepare($qry3);
                 $statement3->execute();
-                logOut();
+                $nombres = $statement3->fetchAll(PDO::FETCH_ASSOC);
+                if ($nombres) {
+                    return "Usuario no disponible";
+                } else {
+                    $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
+                    $statement2 = $pdo->prepare($qry2);
+                    $statement2->execute();
+                    $userOld = $_SESSION['usuario'];
+                    $qry3 = "DELETE FROM usuarios WHERE user = '$userOld'";
+                    $statement3 = $pdo->prepare($qry3);
+                    $statement3->execute();
+                    logOut();
+                }
             } catch (PDOException $excepcion) {
                 echo "Error en la modificación de tipo " . $excepcion->getMessage();
             }
