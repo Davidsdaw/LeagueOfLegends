@@ -14,7 +14,12 @@
     $resultado2 = '';
     include 'pages/funciones.php';
     connect_bd();
-    generarToken();
+    
+
+    if(!isset($_SESSION['token'])){
+        generarToken();
+    }
+
     $error = '&nbsp';
     if (!isset($_SESSION['usuario'])) {
         if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['token'])) {
