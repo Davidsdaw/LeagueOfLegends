@@ -23,7 +23,7 @@
             $token = $_POST['token'];
 
 
-            $resultado = comprobarlogin($usuario, $password);
+            $resultado = comprobarlogin($usuario, $password,$token);
 
             if ($resultado[0] != $usuario) {
                 $error = $resultado[1];

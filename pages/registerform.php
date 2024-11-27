@@ -12,6 +12,7 @@
     <?php
 
     include "funciones.php";
+    generarToken();
     if (isset($_SESSION['usuario'])) {
         header("Location: ../index.php");
     }
@@ -58,6 +59,7 @@
                 <label for="email">Email:</label>
             </div>
             <p class="error" id="error"><?php echo $error; ?></p>
+            <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
             <button id="reg" type="submit">Registrar</button>
         </form>
     </div>

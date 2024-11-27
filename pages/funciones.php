@@ -35,7 +35,7 @@
 
     //GENERAR TOKEN AL PRINCIPIO DE LA PAGINA METERLO AL FORM Y COMPARAR EL SESSION['TOKEN'] con el POST['token']
 
-    function comprobarlogin($usuario, $password)
+    function comprobarlogin($usuario, $password,$token)
     {
         global $pdo;
         $returnuser = [];
@@ -47,7 +47,7 @@
                 $qry = "SELECT user,rol FROM usuarios WHERE user LIKE '$usuario' AND password LIKE '$password'";
                 $resultado = $pdo->query($qry);
                 $usuarioData = $resultado->fetch(PDO::FETCH_ASSOC);
-                if ($usuarioData) {
+                if ($usuarioData && $_SESSION['token']==$token) {
                     $_SESSION["usuario"] = $usuario;
                     $_SESSION["rol"] = $usuarioData['rol'];
 
@@ -82,6 +82,8 @@
             } else {
                 $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
                 $pdo->exec($qry2);
+                $_SESSION["usuario"] = $usuario;
+                $_SESSION["rol"] = 'R';
                 header("Location: paginamain.php");
             }
         } catch (PDOException $excepcion) {
