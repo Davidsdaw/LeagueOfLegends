@@ -25,6 +25,16 @@
         }
     }
 
+    function generarToken()
+    {
+        $hora = date('H:i');
+        $session_id = session_id();
+        $token = hash('sha256', $hora . $session_id);
+        $_SESSION['token'] = $token;
+    }
+
+    //GENERAR TOKEN AL PRINCIPIO DE LA PAGINA METERLO AL FORM Y COMPARAR EL SESSION['TOKEN'] con el POST['token']
+
     function comprobarlogin($usuario, $password)
     {
         global $pdo;
@@ -38,12 +48,9 @@
                 $resultado = $pdo->query($qry);
                 $usuarioData = $resultado->fetch(PDO::FETCH_ASSOC);
                 if ($usuarioData) {
-                    $hora = date('H:i');
-                    $session_id = session_id();
-                    $token = hash('sha256', $hora . $session_id);
-                    $_SESSION['token'] = $token;
                     $_SESSION["usuario"] = $usuario;
                     $_SESSION["rol"] = $usuarioData['rol'];
+
                     header("Location: pages/paginamain.php");
                 } else {
                     $returnuser[0] = $usuario;
@@ -52,7 +59,7 @@
                 }
             } else {
                 $returnuser[0] = false;
-                $returnuser[1] = "Usuario no valido";
+                $returnuser[1] = "Usuario no valido <a href='./pages/registerform.php'> registrate </a>";
                 return $returnuser;
             }
         } catch (PDOException $excepcion) {
@@ -68,7 +75,7 @@
             $resultado = $pdo->query($qry);
             if ($resultado->fetch()) {
                 $returnuser[0] = $email;
-                $returnuser[1] = "El usuario ya está en uso";
+                $returnuser[1] = "El usuario ya está en uso <a href='../index.php'> inicia sesión </a>";
                 $returnuser[2] = $password;
 
                 return $returnuser;

@@ -11,7 +11,7 @@
 <body>
     <?php
     include "funciones.php";
-    if (isset($_SESSION['token'])) {
+    if (isset($_SESSION['usuario'])) {
     } else header("Location: ../index.php");
 
     ?>

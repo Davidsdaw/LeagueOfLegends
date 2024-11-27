@@ -12,7 +12,7 @@
     <?php
 
     include "funciones.php";
-    if (isset($_SESSION['token'])) {
+    if (isset($_SESSION['usuario'])) {
         header("Location: ../index.php");
     }
 

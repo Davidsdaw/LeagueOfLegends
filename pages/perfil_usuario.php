@@ -12,7 +12,7 @@
 <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
     <?php
     include "./funciones.php";
-    if (isset($_SESSION['token'])) {
+    if (isset($_SESSION['usuario'])) {
     } else header("Location: ../index.php");
 
     $datosPerfil = cargarDatosPerfil($_SESSION['usuario']);

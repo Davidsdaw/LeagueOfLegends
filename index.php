@@ -14,11 +14,13 @@
     $resultado2 = '';
     include 'pages/funciones.php';
     connect_bd();
+    generarToken();
     $error = '&nbsp';
-    if (!isset($_SESSION['token'])) {
-        if (isset($_POST['usuario']) && isset($_POST['password'])) {
+    if (!isset($_SESSION['usuario'])) {
+        if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['token'])) {
             $usuario = $_POST['usuario'];
             $password = $_POST['password'];
+            $token = $_POST['token'];
 
 
             $resultado = comprobarlogin($usuario, $password);
@@ -48,6 +50,7 @@
                     <input placeholder="Contraseña" type="password" name="password" id="password" autocomplete="off" required>
                     <label for="password">Contraseña:</label>
                 </div>
+                <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
                 <p class="error" id="error"><?php echo $error; ?></p>
                 <button id="log" type="submit">Log in</button>
             </form>
