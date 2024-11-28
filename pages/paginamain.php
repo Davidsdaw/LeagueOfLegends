@@ -6,16 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoLAccounts</title>
     <link rel="stylesheet" href="../css/pagmain.css">
+    <script src="https://kit.fontawesome.com/b2238aa62f.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="light-theme">
+    <header>
+        <div class="logo">LoLAccounts</div>
+        <div class="buttons">
+            <i class="fa-solid fa-moon"></i> <!--Cambiar el tema -->
+            <i class="fa-solid fa-user-plus" id="userIcon"></i> <!--Si el usuario es admin le sale las 2 opciones -->
+            <a href="./logout.php" class="aaaa"><i class="fa-solid fa-right-from-bracket"></i></a><!--Logout para eliminar el login guardado !!!!NO HAY UNA PAGINA LOGOUT!!!-->
+            <!--Menu Despegable -->
+            <div class="dropdown" id="dropdownMenu">
+                <a href="./perfil_usuario.php">Personalizar Usuario</a>
+                <a href="./perfil_admin.php">Administrar</a>
+            </div>
+        </div>
+    </header>
     <?php
     include "funciones.php";
     if (isset($_SESSION['usuario'])) {
     } else header("Location: ../index.php");
 
     ?>
-    <h1>Cuentas de League of Legends</h1>
+
+
+
+
     <div id="accounts-container">
 
         <?php
@@ -34,5 +51,6 @@
         ?>
     </div>
 </body>
+<script src="../js/paginamain.js"></script>
 
 </html>
