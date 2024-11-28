@@ -9,12 +9,18 @@
 </head>
 
 <body>
+<?php
+    include "funciones.php";
+    if (isset($_SESSION['usuario'])&&$_SESSION['rol']=='A') {
+    } else header("Location: ../index.php");
+    ?>
     <div class="container">
         <!-- Menú lateral -->
         <aside class="sidebar">
             <div class="admin-header">
                 <h2>Administrador</h2>
                 <p>Bienvenido, Admin</p>
+                <a href="./paginamain.php">Volver</a>
             </div>
             <nav>
                 <ul id="li">

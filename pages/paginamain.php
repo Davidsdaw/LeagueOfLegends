@@ -10,6 +10,13 @@
 </head>
 
 <body class="light-theme">
+
+<?php
+    include "funciones.php";
+    if (isset($_SESSION['usuario'])) {
+    } else header("Location: ../index.php");
+
+    ?>
     <header>
         <div class="logo">LoLAccounts</div>
         <div class="buttons">
@@ -19,19 +26,12 @@
             <!--Menu Despegable -->
             <div class="dropdown" id="dropdownMenu">
                 <a href="./perfil_usuario.php">Personalizar Usuario</a>
-                <a href="./perfil_admin.php">Administrar</a>
+                <?php 
+                if($_SESSION['rol']=="A") echo '<a href="./perfil_admin.php">Administrar</a>';
+                ?>
             </div>
         </div>
     </header>
-    <?php
-    include "funciones.php";
-    if (isset($_SESSION['usuario'])) {
-    } else header("Location: ../index.php");
-
-    ?>
-
-
-
 
     <div id="accounts-container">
 
