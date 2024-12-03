@@ -19,12 +19,12 @@
 
     $error = '';
 
-        if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
-            cambiarFoto($_SESSION['usuario'],$_FILES['product_image']);
-        }
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+        cambiarFoto($_SESSION['usuario'], $_FILES['product_image']);
+    }
 
     if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['email'])) {
-        $error = modificarPerfil($_POST['usuario'], $_POST['password'], $_POST['email'],$_SESSION['imagenRuta']);
+        $error = modificarPerfil($_POST['usuario'], $_POST['password'], $_POST['email'], $_SESSION['imagenRuta']);
     }
 
     ?>
@@ -59,20 +59,11 @@
                 </select>
             </div>
 
-            <!-- Biografía 
-            <div>
-                <label for="bio" class="block text-sm font-medium">Bio</label>
-                <textarea id="bio" name="bio" rows="4" placeholder="Tell us a little bit about yourself"
-                    class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"></textarea>
-            </div>
--->
-
-
             <!-- Foto de perfil -->
             <div>
                 <label class="block text-sm font-medium mb-2">Foto de Perfil</label>
                 <div class="relative w-32 h-32 mx-auto">
-                    <img id="profileImage" src="<?php if($_SESSION['imagenRuta']!='')echo $_SESSION['imagenRuta'] ?>" alt="Profile Picture"
+                    <img id="profileImage" src="<?php if ($_SESSION['imagenRuta'] != '') echo $_SESSION['imagenRuta'] ?>" alt="Profile Picture"
                         class="w-32 h-32 rounded-full object-cover border-2 border-gray-600" />
                     <label for="product_image"
                         class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full cursor-pointer hover:bg-blue-600">
@@ -83,16 +74,29 @@
                     </label>
                     <input type="file" id="product_image" name="product_image" accept="image/*" class="hidden"
                         onchange="updateProfilePicture(event)" />
-        
+
                 </div>
             </div>
 
             <!-- Botón de guardar -->
-            <div class="text-center">
+            <div class="text-center flex space-x-4">
+                <!-- Botón Guardar -->
                 <button type="submit" name="insert"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg w-full">
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg w-1/2">
                     Guardar
                 </button>
+                <!-- Botón Descartar -->
+                <button type="reset"
+                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg w-1/2">
+                    Descartar
+                </button>
+            </div>
+            <div class="text-center mt-4">
+                <!-- Botón Volver -->
+                <a href="./paginamain.php"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg w-full block">
+                    Volver
+                </a>
             </div>
         </form>
     </div>
