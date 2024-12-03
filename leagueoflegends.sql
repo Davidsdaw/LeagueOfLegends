@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 20:53:48
+-- Tiempo de generación: 03-12-2024 a las 21:14:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -127,18 +127,19 @@ CREATE TABLE `usuarios` (
   `user` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `rol` char(1) DEFAULT NULL CHECK (`rol` in ('A','R')),
-  `mail` varchar(100) NOT NULL
+  `mail` varchar(100) NOT NULL,
+  `path_image` varchar(255) NOT NULL DEFAULT '../assets/images/users/674f64281c8c9.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`) VALUES
-('a', 'a', 'R', 'a@a.a'),
-('admin', '1234', 'A', 'admin@riberadeltajo.es'),
-('asd', 'asd', 'R', ''),
-('registrado', '1234', 'R', 'registrado@riberadeltajo.es');
+INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`, `path_image`) VALUES
+('a', 'a', 'R', 'a@a.a', '../assets/images/users/674f5217e5ea5.jpg'),
+('admin', '1234', 'A', 'admin@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png'),
+('asd', 'asd', 'R', 'admin@lolaccs.es', '../assets/images/users/674f64281c8c9.png'),
+('registrado', '1234', 'R', 'registrado@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png');
 
 --
 -- Índices para tablas volcadas
