@@ -361,7 +361,7 @@ h1 {
 
 .carousel-track {
     display: flex;
-    animation: scroll 10s linear infinite;
+    animation: scroll 15s linear infinite;
 }
 
 .card {
@@ -387,50 +387,23 @@ h1 {
     }
 }
 
-/* Duplicación para efecto continuo */
-.carousel-track {
-    width: calc(300px * 6 + 10px * 12);
-    /* Ajustar al número de tarjetas */
-}
-
 .carousel-track:hover {
     animation-play-state: paused;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.carousel-track2 {
-    width: calc(300px * 6 + 10px * 12);
-    /* Ajustar al número de tarjetas */
-}
-
 .carousel-track2 {
     display: flex;
-    animation: scroll-left-to-right 10s linear infinite;
+    animation: scroll-left-to-right 15s linear infinite;
     /* Lo que hace que la animación se repita infinitamente */
 }
 
 /* Animación de izquierda a derecha */
 @keyframes scroll-left-to-right {
     0% {
-        transform: translateX(0%);
-        /* Inicia desplazado fuera de la pantalla a la izquierda */
+        transform: translateX(-50%);
     }
 
     100% {
-        transform: translateX(50%);
-        /* Termina desplazado a la posición final */
+        transform: translateX(0%);
     }
 }
