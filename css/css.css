@@ -1,3 +1,7 @@
+body {
+    background-color: #111827;
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -319,5 +323,114 @@ h1 {
 
     100% {
         top: 650px;
+    }
+}
+
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 80%;
+    height: 150px;
+    BACKGROUND-COLOR: #111827;
+}
+
+/* Sombras a los lados */
+.carousel::before,
+.carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    /* Permite que se pueda interactuar con el carrusel */
+}
+
+.carousel::before {
+    left: 0;
+    background: linear-gradient(to right, #111827, rgba(24, 24, 24, 0));
+}
+
+.carousel::after {
+    right: 0;
+    background: linear-gradient(to left, #111827, rgba(24, 24, 24, 0));
+}
+
+.carousel-track {
+    display: flex;
+    animation: scroll 10s linear infinite;
+}
+
+.card {
+    min-width: 300px;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #252525;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    flex-shrink: 0;
+    /* Evita que las tarjetas cambien de tamaño */
+}
+
+/* Animación */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Duplicación para efecto continuo */
+.carousel-track {
+    width: calc(300px * 6 + 10px * 12);
+    /* Ajustar al número de tarjetas */
+}
+
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.carousel-track2 {
+    width: calc(300px * 6 + 10px * 12);
+    /* Ajustar al número de tarjetas */
+}
+
+.carousel-track2 {
+    display: flex;
+    animation: scroll-left-to-right 10s linear infinite;
+    /* Lo que hace que la animación se repita infinitamente */
+}
+
+/* Animación de izquierda a derecha */
+@keyframes scroll-left-to-right {
+    0% {
+        transform: translateX(0%);
+        /* Inicia desplazado fuera de la pantalla a la izquierda */
+    }
+
+    100% {
+        transform: translateX(50%);
+        /* Termina desplazado a la posición final */
     }
 }

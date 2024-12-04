@@ -120,6 +120,7 @@
             }
             ?>
         </section>
+
     </main>
 
 
@@ -129,6 +130,31 @@
 
 
     </div>
+    <!-- CARRUSEL DE FEEDBACK -->
+    <div class="carousel">
+        <div class="carousel-track">
+            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
+            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
+            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+            <!-- Duplicar las tarjetas para efecto continuo -->
+            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
+            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
+            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+        </div>
+    </div>
+    <div class="carousel">
+        <div class="carousel-track2">
+            <!-- Tarjetas originales -->
+            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
+            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
+            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+            <!-- Tarjetas duplicadas para efecto continuo -->
+            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
+            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
+            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+        </div>
+    </div>
+
     <!--Preguntas y respuestas-->
     <div class="faq-container">
         <h2 class="faq">FAQs About LoL Accounts</h2>
