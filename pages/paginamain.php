@@ -243,10 +243,6 @@
                         <i class="fa-brands fa-discord"></i>
                         Join Discord</button>
                 </div>
-                <div class="footer-locale">
-                    <img src="uk-flag.png" alt="English">
-                    <span>English / EUR</span>
-                </div>
             </div>
         </div>
 
