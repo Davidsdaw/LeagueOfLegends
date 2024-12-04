@@ -121,6 +121,125 @@
         </section>
     </main>
 
+
+    <!--Boton de abajo izquierda para algo -->
+    <div class="coment">
+        <i class="fa-solid fa-comment"></i>
+
+
+    </div>
+    <!--Preguntas y respuestas-->
+    <div class="faq-container">
+        <h1>FAQs About LoL Accounts</h1>
+        <div class="faq-item">
+            <button class="faq-question">How do I pick a League of Legends account?</button>
+            <div class="faq-answer">
+                <p>Choose an account based on your desired rank, skins, and champion pool.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">I’ve chosen an account. Now what?</button>
+            <div class="faq-answer">
+                <p>Once you've chosen an account, complete the purchase and follow the delivery instructions.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">How fast can I start playing?</button>
+            <div class="faq-answer">
+                <p>You can start playing as soon as you receive the account credentials, usually within minutes.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">What if I encounter issues with the account?</button>
+            <div class="faq-answer">
+                <p>Contact support immediately for assistance with any account issues.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">How do I keep the account secure?</button>
+            <div class="faq-answer">
+                <p>Enable two-factor authentication and avoid sharing your credentials with anyone.</p>
+            </div>
+        </div>
+    </div>
+    <!--Pie de pagina -->
+    <footer class="footer">
+        <div class="payment-methods">
+            <img src="../assets/images/metodos de pago/visa.png" alt="Visa">
+            <img src="../assets/images/metodos de pago/mastercard.png" alt="MasterCard">
+            <img src="../assets/images/metodos de pago/psc.png" alt="PaySafeCard">
+            <img src="../assets/images/metodos de pago/apay.png" alt="Apple Pay">
+            <img src="../assets/images/metodos de pago/gpay.png" alt="Google Pay">
+            <img src="../assets/images/metodos de pago/sepa.png" alt="SEPA">
+            <img src="../assets/images/metodos de pago/skrill.png" alt="Skrill">
+            <img src="../assets/images/metodos de pago/trustly.png" alt="Trustly">
+        </div>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Game Boost</h3>
+                <p>The All-In-One Platform for Gamers</p>
+                <p>Changing the lives of everyday gamers, one game at a time.</p>
+                <p>
+                    <strong>Headquarter:</strong> Strmec Stubički 124, Općina Stubičke Toplice, Croatia<br>
+                    <strong>Office:</strong> Petrovaradinska 1, 4th floor, 10 000 Zagreb, Croatia<br>
+                    <strong>Registration Number:</strong> 081421549
+                </p>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">Work with us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">GameBoost Cares</a></li>
+                    <li><a href="#">Definitions</a></li>
+                    <li><a href="#">Site Map</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of service</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookies policy</a></li>
+                    <li><a href="#">Code of honor</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Need Help?</h3>
+                <p>We're here to help. Our expert human-support team is at your service 24/7.</p>
+                <div class="support-buttons">
+                    <button class="chat-btn">
+                        <i class="fa-regular fa-comment"></i>
+                        Let’s Chat</button>
+                    <button class="discord-btn">
+                        <i class="fa-brands fa-discord"></i>
+                        Join Discord</button>
+                </div>
+                <div class="footer-locale">
+                    <img src="uk-flag.png" alt="English">
+                    <span>English / EUR</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="copyright">
+            <h3>Copyright © 2024 Global Gaming Services d.o.o. All rights Reserved</h3>
+            <div>
+
+
+            </div>
+            <div class="i">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-tiktok"></i>
+            </div>
+        </div>
+    </footer>
+
 </body>
 <script src="../js/paginamain.js"></script>
 
