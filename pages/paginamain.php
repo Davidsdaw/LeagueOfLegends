@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/pagmain.css">
     <script src="https://kit.fontawesome.com/b2238aa62f.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/css.css">
 
 </head>
 
@@ -23,7 +24,7 @@
     <header class="bg-gray-800 text-white p-4 shadow-md flex items-center justify-between">
         <!-- Logo y Nombre de la página -->
         <div class="flex items-center space-x-4">
-            <img src="" alt="Logo" class="w-10 h-10 rounded-full">
+            <img src="../assets/images/logo.png" alt="Logo" class="w-12 h-12 rounded-full">
             <h1 class="text-xl font-bold">LoLAccs</h1>
         </div>
 
@@ -32,7 +33,7 @@
             <!-- Foto y Nombre del Usuario -->
             <div class="flex items-center space-x-2" id="userIcon">
                 <span class="font-medium"><?php echo $_SESSION['usuario'] ?></span>
-                <img src="<?php echo $_SESSION['imagenRuta'] ?>" alt="User Picture" class="w-10 h-10 rounded-full border-2 border-gray-600">
+                <img src="<?php echo $_SESSION['imagenRuta'] ?>" alt="User Picture" class="w-12 h-12 rounded-full border-2 border-gray-600">
                 <div class="dropdown" id="dropdownMenu">
                     <a href="./perfil_usuario.php">Personalizar Usuario</a>
                     <?php
@@ -130,7 +131,7 @@
     </div>
     <!--Preguntas y respuestas-->
     <div class="faq-container">
-        <h1>FAQs About LoL Accounts</h1>
+        <h2 class="faq">FAQs About LoL Accounts</h2>
         <div class="faq-item">
             <button class="faq-question">How do I pick a League of Legends account?</button>
             <div class="faq-answer">
@@ -225,7 +226,9 @@
 
 
         <div class="copyright">
-            <h3>Copyright © 2024 Global Gaming Services d.o.o. All rights Reserved</h3>
+            <small>
+                <h3>Copyright © 2024 Global Gaming Services d.o.o. All rights Reserved</h3>
+            </small>
             <div>
 
 
