@@ -13,6 +13,7 @@
     include "funciones.php";
     if (isset($_SESSION['usuario'])&&$_SESSION['rol']=='A') {
     } else header("Location: ../index.php");
+    inactividad();
     ?>
     <div class="container">
         <!-- Menú lateral -->

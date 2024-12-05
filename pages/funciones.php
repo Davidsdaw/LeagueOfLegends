@@ -111,6 +111,49 @@
         }
     }
 
+    function obtenerCuentasFiltro($rango,$champs,$precio)
+    {
+        connect_bd();
+        global $pdo;
+        
+        try {
+            // Base de la consulta
+            $query = "SELECT * FROM cuentas WHERE estado = 'disponible'";
+            $params = [];
+    
+            // Agregar filtros dinámicamente
+            if ($rango!='ALL') {
+                $query .= " AND rango = :rango";
+                $params[':rango'] = $rango;
+            }
+    
+            if ($champs) {
+                $query .= " AND campeones <= :champs";
+                $params[':champs'] = $champs;
+            }
+    
+            if ($precio) {
+                $query .= " AND precio <= :precio";
+                $params[':precio'] = $precio;
+            }
+    
+            // Preparar la consulta
+            $statement = $pdo->prepare($query);
+    
+            // Ejecutar con parámetros
+            $statement->execute($params);
+    
+            // Obtener los resultados como un array asociativo
+            $accounts = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $accounts;
+    
+        } catch (PDOException $excepcion) {
+            echo "Error en la base de datos: " . $excepcion->getMessage();
+            return []; // En caso de error, devuelve un array vacío
+        }
+    }
+
     function cargarDatosPerfil($usuario)
     {
         connect_bd();
@@ -229,7 +272,19 @@
         header("Location: ../index.php");
     }
 
-
+    function inactividad(){
+        $inactivityLimit = 300;  //5 minutos
+if (isset($_SESSION['last_activity'])) {
+    $timeElapsed = time() - $_SESSION['last_activity']; 
+    if ($timeElapsed > $inactivityLimit) {
+        session_unset();
+        session_destroy();
+        header("Location: ../index.php?message=inactivity");
+        exit();
+    }
+}
+$_SESSION['last_activity'] = time();
+    }
     ?>
 </body>
 

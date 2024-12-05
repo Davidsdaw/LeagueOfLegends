@@ -14,6 +14,7 @@
     include "./funciones.php";
     if (isset($_SESSION['usuario'])) {
     } else header("Location: ../index.php");
+    inactividad();
 
     $datosPerfil = cargarDatosPerfil($_SESSION['usuario']);
 

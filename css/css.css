@@ -299,8 +299,7 @@ h1 {
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: -100px;
-    left: 1460px;
+    left: 95%;
     width: 50px;
     height: 50px;
     opacity: 1;
@@ -316,13 +315,13 @@ h1 {
 /* Animación */
 @keyframes fallRotate {
     0% {
-        top: -100px;
+        top: 0px;
         transform: rotate(180deg);
     }
 
 
     100% {
-        top: 650px;
+        top: 93%;
     }
 }
 
@@ -380,11 +379,11 @@ h1 {
 /* Animación */
 @keyframes scroll {
     0% {
-        transform: translateX(0);
+        transform: translateX(0%);
     }
 
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 }
 
@@ -406,7 +405,7 @@ h1 {
 /* Animación de izquierda a derecha */
 @keyframes scroll-left-to-right {
     0% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 
     100% {

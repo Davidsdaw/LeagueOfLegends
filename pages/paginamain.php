@@ -18,9 +18,12 @@
     include "funciones.php";
     if (isset($_SESSION['usuario'])) {
     } else header("Location: ../index.php");
+    inactividad();
 
     ?>
-
+    <div class="coment">
+        <i class="fa-solid fa-comment"></i>
+    </div>
     <header class="bg-gray-800 text-white p-4 shadow-md flex items-center justify-between">
         <!-- Logo y Nombre de la página -->
         <div class="flex items-center space-x-4">
@@ -48,7 +51,7 @@
             </a>
         </div>
     </header>
-    <main class="bg-gray-900 text-white min-h-screen p-8">
+    <main class="bg-gray-900 text-white p-8">
         <!-- Header del perfil -->
         <section class="bg-gray-800 rounded-lg p-6 mb-10 flex items-center justify-between shadow-lg">
             <div class="flex items-center">
@@ -66,9 +69,9 @@
         <!-- Filtro -->
         <section class="mb-8">
             <h2 class="text-2xl font-bold mb-4">Filtrar Cuentas</h2>
-            <form class="flex flex-wrap gap-4">
-                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto">
-                    <option value="">Rango</option>
+            <form class="flex flex-wrap gap-4" method="POST">
+                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto" id="rango" name="rango">
+                    <option value="" selected disabled>Rango</option>
                     <option value="hierro">Hierro</option>
                     <option value="bronze">Bronze</option>
                     <option value="plata">Plata</option>
@@ -80,17 +83,17 @@
                     <option value="grandmaster">Grand Master</option>
                     <option value="challenger">Challenger</option>
                 </select>
-                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto">
-                    <option value="">Campeones</option>
+                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto" id="champs" name="champs">
+                    <option value=""selected disabled>Campeones</option>
                     <option value="40">Hasta 40 Campeones</option>
-                    <option value="60">Hasta 60 Campeones</option>
-                    <option value="80">Más de 80 Campeones</option>
+                    <option value="80">Hasta 80 Campeones</option>
+                    <option value="160">Hasta 160 Campeones</option>
                 </select>
-                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto">
-                    <option value="">Precio</option>
-                    <option value="20">$20 - $50</option>
-                    <option value="50">$50 - $100</option>
-                    <option value="100">Más de $100</option>
+                <select class="bg-gray-700 border border-gray-600 rounded-lg p-2 text-white w-full sm:w-auto" id="precio" name="precio">
+                    <option value=""selected disabled>Precio</option>
+                    <option value="50">Hasta $50</option>
+                    <option value="100">Hasta $100</option>
+                    <option value="200">Hasta $200</option>
                 </select>
                 <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
                     Aplicar Filtros
@@ -102,7 +105,13 @@
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <?php
-            $accounts = obtenerCuentasDisponibles();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $rango = isset($_POST['rango']) && $_POST['rango'] !== '' ? $_POST['rango'] : 'ALL';
+    $champs = isset($_POST['champs']) && $_POST['champs'] !== '' ? $_POST['champs'] : '999';
+    $precio = isset($_POST['precio']) && $_POST['precio'] !== '' ? $_POST['precio'] : '999';
+    $accounts = obtenerCuentasFiltro($rango, $champs, $precio);
+            } else $accounts = obtenerCuentasDisponibles();
+
             foreach ($accounts as $cuenta) {
 
                 echo '<div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -125,35 +134,247 @@
 
 
     <!--Boton de abajo izquierda para algo -->
-    <div class="coment">
-        <i class="fa-solid fa-comment"></i>
 
-
-    </div>
+    <h2 class="faq">Nuestros Clientes</h2>
     <!-- CARRUSEL DE FEEDBACK -->
-    <div class="carousel">
-        <div class="carousel-track">
-            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
-            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
-            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
-            <!-- Duplicar las tarjetas para efecto continuo -->
-            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
-            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
-            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+    <div class="carousel relative overflow-hidden mx-auto w-4/5 mb-10 h-auto bg-gray-900">
+  <!-- Sombras laterales -->
+  <div class="absolute top-0 left-0 w-36 h-full bg-gradient-to-r from-gray-900 to-transparent pointer-events-none z-10"></div>
+  <div class="absolute top-0 right-0 w-36 h-full bg-gradient-to-l from-gray-900 to-transparent pointer-events-none z-10"></div>
+
+  <!-- Pista del carrusel -->
+  <div class="carousel-track flex animate-scroll">
+    <!-- Tarjeta 1 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Eddy Boy</h3>
+      <p class="text-sm text-gray-400">Desde España</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
         </div>
+        <span class="ml-3 text-sm text-gray-400">4/5</span>
+      </div>
+      <p class="mt-4 text-sm">"¡Siempre cumplen con lo prometido! Estoy impresionado con la rapidez y la calidad del servicio."</p>
     </div>
-    <div class="carousel">
-        <div class="carousel-track2">
-            <!-- Tarjetas originales -->
-            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
-            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
-            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
-            <!-- Tarjetas duplicadas para efecto continuo -->
-            <div class="card">Paulino<br>🇵🇹<br>Literalmente 11/10...</div>
-            <div class="card">D.Mcgregor<br>🇩🇪<br>Un servicio increíble...</div>
-            <div class="card">Eddy Boy<br>🇩🇪<br>Siempre cumplen...</div>
+
+    <!-- Tarjeta 2 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Paulino</h3>
+      <p class="text-sm text-gray-400">Desde Portugal</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
         </div>
+        <span class="ml-3 text-sm text-gray-400">5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Literalmente 11/10. Superaron todas mis expectativas, excelente atención al cliente."</p>
     </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">D. McGregor</h3>
+      <p class="text-sm text-gray-400">Desde Estados Unidos</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">4.5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Un servicio increíble, definitivamente volveré a usarlo. Lo recomiendo a todos."</p>
+    </div>
+        <!-- Tarjeta 4 -->
+        <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Paulino</h3>
+      <p class="text-sm text-gray-400">Desde Portugal</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Literalmente 11/10. Superaron todas mis expectativas, excelente atención al cliente."</p>
+    </div>
+  </div>
+</div>
+<div class="carousel relative overflow-hidden mx-auto w-4/5 mb-20 h-auto bg-gray-900">
+  <!-- Sombras laterales -->
+  <div class="absolute top-0 left-0 w-36 h-full bg-gradient-to-r from-gray-900 to-transparent pointer-events-none z-10"></div>
+  <div class="absolute top-0 right-0 w-36 h-full bg-gradient-to-l from-gray-900 to-transparent pointer-events-none z-10"></div>
+
+  <!-- Pista del carrusel -->
+  <div class="carousel-track2 flex animate-scroll">
+    <!-- Tarjeta 1 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Eddy Boy</h3>
+      <p class="text-sm text-gray-400">Desde España</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">4/5</span>
+      </div>
+      <p class="mt-4 text-sm">"¡Siempre cumplen con lo prometido! Estoy impresionado con la rapidez y la calidad del servicio."</p>
+    </div>
+
+    <!-- Tarjeta 2 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Paulino</h3>
+      <p class="text-sm text-gray-400">Desde Portugal</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Literalmente 11/10. Superaron todas mis expectativas, excelente atención al cliente."</p>
+    </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">D. McGregor</h3>
+      <p class="text-sm text-gray-400">Desde Estados Unidos</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">4.5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Un servicio increíble, definitivamente volveré a usarlo. Lo recomiendo a todos."</p>
+    </div>
+        <!-- Tarjeta 4 -->
+        <div class="card min-w-[450px] mx-2 p-6 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg shadow-lg flex-shrink-0 text-white">
+      <h3 class="text-xl font-semibold">Paulino</h3>
+      <p class="text-sm text-gray-400">Desde Portugal</p>
+      <div class="flex items-center mt-3">
+        <!-- Estrellas -->
+        <div class="flex space-x-1 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431L23.39 9.9l-5.726 5.553 1.353 7.885L12 18.897l-7.017 4.441 1.353-7.885L.61 9.9l7.722-1.882z" />
+          </svg>
+        </div>
+        <span class="ml-3 text-sm text-gray-400">5/5</span>
+      </div>
+      <p class="mt-4 text-sm">"Literalmente 11/10. Superaron todas mis expectativas, excelente atención al cliente."</p>
+    </div>
+  </div>
+</div>
 
     <!--Preguntas y respuestas-->
     <div class="faq-container">
