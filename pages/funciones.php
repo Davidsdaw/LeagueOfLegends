@@ -27,27 +27,24 @@
 
     function generarToken()
     {
-        $hora = date('H:i');
+        $hora = rand(0, 9999);
         $session_id = session_id();
         $token = hash('sha256', $hora . $session_id);
         $_SESSION['token'] = $token;
     }
-
-    //GENERAR TOKEN AL PRINCIPIO DE LA PAGINA METERLO AL FORM Y COMPARAR EL SESSION['TOKEN'] con el POST['token']
 
     function comprobarlogin($usuario, $password, $token)
     {
         global $pdo;
         $returnuser = [];
         try {
-
-            $qry2 = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
-            $resultado2 = $pdo->query($qry2);
-            if ($resultado2->fetch()) {
-                $qry = "SELECT user,rol,path_image FROM usuarios WHERE user LIKE '$usuario' AND password LIKE '$password'";
-                $resultado = $pdo->query($qry);
-                $usuarioData = $resultado->fetch(PDO::FETCH_ASSOC);
-                if ($usuarioData && $_SESSION['token'] == $token) {
+            $qry = "SELECT user, password, rol, path_image FROM usuarios WHERE user = :usuario";
+            $stmt = $pdo->prepare($qry);
+            $stmt->execute(['usuario' => $usuario]);
+            $usuarioData = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($usuarioData) {
+                // Verificar la contraseña usando password_verify ¡¡¡VARCHAR255 EN LA BD!!!!
+                if (password_verify($password, $usuarioData['password']) && $_SESSION['token'] == $token) {
                     $_SESSION["usuario"] = $usuario;
                     $_SESSION["rol"] = $usuarioData['rol'];
                     $_SESSION["imagenRuta"] = $usuarioData['path_image'];
@@ -55,12 +52,12 @@
                     header("Location: pages/paginamain.php");
                 } else {
                     $returnuser[0] = $usuario;
-                    $returnuser[1] = "Contraseña no valida";
+                    $returnuser[1] = "Contraseña no válida";
                     return $returnuser;
                 }
             } else {
                 $returnuser[0] = false;
-                $returnuser[1] = "Usuario no valido <a href='./pages/registerform.php'> registrate </a>";
+                $returnuser[1] = "Usuario no válido <a href='./pages/registerform.php'> registrate </a>";
                 return $returnuser;
             }
         } catch (PDOException $excepcion) {
@@ -71,26 +68,83 @@
     function registrarusuario($usuario, $password, $email)
     {
         global $pdo;
+
+        // Inicializar una lista de errores de validación
+        $errores = [];
+
+        // Validar longitud mínima
+        if (strlen($password) < 8) {
+            $errores[] = "Debe tener al menos 8 caracteres.";
+        }
+        // Validar mayúsculas
+        if (!preg_match('/[A-Z]/', $password)) {
+            $errores[] = "Debe incluir al menos una letra mayúscula.";
+        }
+        // Validar minúsculas
+        if (!preg_match('/[a-z]/', $password)) {
+            $errores[] = "Debe incluir al menos una letra minúscula.";
+        }
+        // Validar números
+        if (!preg_match('/\d/', $password)) {
+            $errores[] = "Debe incluir al menos un número.";
+        }
+        // Validar caracteres especiales
+        if (!preg_match('/[@$!%*?&]/', $password)) {
+            $errores[] = "Debe incluir al menos un carácter especial (@$!%*?&).";
+        }
+
+        // Si hay errores, devolvemos los detalles
+
         try {
-            $qry = "SELECT user FROM usuarios WHERE user LIKE '$usuario'";
-            $resultado = $pdo->query($qry);
-            if ($resultado->fetch()) {
+            $qry = "SELECT user FROM usuarios WHERE user LIKE :usuario";
+            $stmt = $pdo->prepare($qry);
+            $stmt->execute(['usuario' => $usuario]);
+            if ($stmt->fetch()) {
                 $returnuser[0] = $email;
                 $returnuser[1] = "El usuario ya está en uso <a href='../index.php'> inicia sesión </a>";
                 $returnuser[2] = $password;
+                $returnuser[3] = '';
+                $returnuser[4] = $usuario;
 
                 return $returnuser;
             } else {
-                $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email')";
-                $pdo->exec($qry2);
-                $_SESSION["usuario"] = $usuario;
-                $_SESSION["rol"] = 'R';
-                header("Location: paginamain.php");
+                if (!empty($errores)) {
+                    $returnuser[0] = $email;
+                    $returnuser[1] = "La contraseña no cumple con los siguientes requisitos:";
+                    $returnuser[2] = $password;
+                    $returnuser[3] = $errores;
+                    $returnuser[4] = $usuario;
+
+                    return $returnuser;
+                } else {
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+                    // Preparar la consulta de inserción
+                    $qry2 = "INSERT INTO usuarios (user, password, rol, mail, path_image) 
+                     VALUES (:usuario, :password, 'R', :mail, :path_image)";
+                    $stmt = $pdo->prepare($qry2);
+                    $stmt->execute([
+                        'usuario' => $usuario,
+                        'password' => $hashedPassword,
+                        'mail' => $email,
+                        'path_image' => '../assets/images/users/674f64281c8c9.png'
+                    ]);
+
+                    // Configurar las variables de sesión
+                    $_SESSION["usuario"] = $usuario;
+                    $_SESSION["rol"] = 'R';
+                    $_SESSION["imagenRuta"] = '../assets/images/users/674f64281c8c9.png';
+
+                    header("Location: paginamain.php");
+                }
+                // Cifrar la contraseña
+
             }
         } catch (PDOException $excepcion) {
             echo "Error en la modificación de tipo " . $excepcion->getMessage();
         }
     }
+
 
 
     function obtenerCuentasDisponibles()
@@ -115,39 +169,39 @@
     {
         connect_bd();
         global $pdo;
-        
+
         try {
             // Base de la consulta
             $query = "SELECT * FROM cuentas WHERE estado = 'disponible'";
             $params = [];
-    
+
             // Agregar filtros dinámicamente
             if ($rango!='ALL') {
                 $query .= " AND rango = :rango";
                 $params[':rango'] = $rango;
             }
-    
+
             if ($champs) {
                 $query .= " AND campeones <= :champs";
                 $params[':champs'] = $champs;
             }
-    
+
             if ($precio) {
                 $query .= " AND precio <= :precio";
                 $params[':precio'] = $precio;
             }
-    
+
             // Preparar la consulta
             $statement = $pdo->prepare($query);
-    
+
             // Ejecutar con parámetros
             $statement->execute($params);
-    
+
             // Obtener los resultados como un array asociativo
             $accounts = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
+
             return $accounts;
-    
+
         } catch (PDOException $excepcion) {
             echo "Error en la base de datos: " . $excepcion->getMessage();
             return []; // En caso de error, devuelve un array vacío
@@ -183,7 +237,8 @@
         global $pdo;
         if ($_SESSION['usuario'] == $usuario) {
             try {
-                $qry = "UPDATE usuarios SET password = '$password', mail = '$email' WHERE user LIKE '$usuario'";
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                $qry = "UPDATE usuarios SET password = '$hashedPassword', mail = '$email' WHERE user LIKE '$usuario'";
                 $statement = $pdo->prepare($qry);
                 $statement->execute();
                 // header("Location: paginamain.php");
@@ -200,7 +255,8 @@
                 if ($nombres) {
                     return "Usuario no disponible";
                 } else {
-                    $qry2 = "INSERT INTO usuarios VALUES('$usuario','$password','R','$email','$foto')";
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                    $qry2 = "INSERT INTO usuarios VALUES('$usuario','$hashedPassword','R','$email','$foto')";
                     $statement2 = $pdo->prepare($qry2);
                     $statement2->execute();
                     $userOld = $_SESSION['usuario'];
@@ -285,6 +341,7 @@ if (isset($_SESSION['last_activity'])) {
 }
 $_SESSION['last_activity'] = time();
     }
+
     ?>
 </body>
 

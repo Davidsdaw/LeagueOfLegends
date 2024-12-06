@@ -55,8 +55,8 @@
 
             <div>
                 <label for="password" class="block text-sm font-medium">Contraseña</label>
-                <input type="password" id="password" name="password" <?php if ($datosPerfil[1]) echo "value='$datosPerfil[1]'" ?> class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5
-                    text-white focus:ring-blue-500 focus:border-blue-500">
+                <input type="password" id="password" name="password" class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5
+                    text-white focus:ring-blue-500 focus:border-blue-500" required>
                 </select>
             </div>
 

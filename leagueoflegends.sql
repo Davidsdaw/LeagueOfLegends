@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-12-2024 a las 21:14:23
+-- Tiempo de generación: 05-12-2024 a las 20:40:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -59,63 +59,50 @@ INSERT INTO `cuentas` (`id_cuenta`, `rp`, `rango`, `precio`, `estado`, `be`, `re
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pagos`
+-- Estructura de tabla para la tabla `cuentasproveedor`
 --
 
-CREATE TABLE `pagos` (
-  `id_pago` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `método_pago` enum('tarjeta','PayPal','otro') DEFAULT 'otro',
-  `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp(),
-  `monto` decimal(10,2) NOT NULL
+CREATE TABLE `cuentasproveedor` (
+  `ID_Proveedor` int(11) NOT NULL,
+  `ID_Cuenta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `pagos`
+-- Volcado de datos para la tabla `cuentasproveedor`
 --
 
-INSERT INTO `pagos` (`id_pago`, `id_pedido`, `método_pago`, `fecha_pago`, `monto`) VALUES
-(1, 1, 'tarjeta', '2024-11-21 19:14:43', 50.00),
-(2, 2, 'PayPal', '2024-11-21 19:14:43', 80.00),
-(3, 3, 'tarjeta', '2024-11-21 19:14:43', 100.00),
-(4, 4, 'PayPal', '2024-11-21 19:14:43', 150.00),
-(5, 6, 'otro', '2024-11-21 19:14:43', 110.00),
-(6, 7, 'PayPal', '2024-11-21 19:14:43', 75.00),
-(7, 8, 'tarjeta', '2024-11-21 19:14:43', 95.00),
-(8, 9, 'PayPal', '2024-11-21 19:14:43', 180.00),
-(9, 10, 'tarjeta', '2024-11-21 19:14:43', 65.00),
-(10, 5, 'PayPal', '2024-11-21 19:14:43', 60.00);
+INSERT INTO `cuentasproveedor` (`ID_Proveedor`, `ID_Cuenta`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 4),
+(2, 5),
+(3, 6),
+(3, 7),
+(4, 8),
+(4, 9),
+(4, 10);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pedidos`
+-- Estructura de tabla para la tabla `proveedores`
 --
 
-CREATE TABLE `pedidos` (
-  `id_pedido` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_cuenta` int(11) NOT NULL,
-  `fecha_pedido` timestamp NOT NULL DEFAULT current_timestamp(),
-  `estado` enum('en_proceso','completado','cancelado') DEFAULT 'en_proceso',
-  `total` decimal(10,2) NOT NULL
+CREATE TABLE `proveedores` (
+  `ID_Proveedor` int(11) NOT NULL,
+  `Nombre_Proveedor` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `pedidos`
+-- Volcado de datos para la tabla `proveedores`
 --
 
-INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `id_cuenta`, `fecha_pedido`, `estado`, `total`) VALUES
-(1, 1, 1, '2024-11-21 19:14:43', 'en_proceso', 50.00),
-(2, 2, 2, '2024-11-21 19:14:43', 'en_proceso', 80.00),
-(3, 3, 3, '2024-11-21 19:14:43', 'completado', 100.00),
-(4, 4, 4, '2024-11-21 19:14:43', 'completado', 150.00),
-(5, 5, 5, '2024-11-21 19:14:43', 'cancelado', 60.00),
-(6, 6, 6, '2024-11-21 19:14:43', 'en_proceso', 110.00),
-(7, 7, 7, '2024-11-21 19:14:43', 'completado', 75.00),
-(8, 8, 8, '2024-11-21 19:14:43', 'en_proceso', 95.00),
-(9, 9, 9, '2024-11-21 19:14:43', 'completado', 180.00),
-(10, 10, 10, '2024-11-21 19:14:43', 'cancelado', 65.00);
+INSERT INTO `proveedores` (`ID_Proveedor`, `Nombre_Proveedor`) VALUES
+(1, 'Juan'),
+(2, 'Pedro'),
+(3, 'Victor'),
+(4, 'David');
 
 -- --------------------------------------------------------
 
@@ -125,7 +112,7 @@ INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `id_cuenta`, `fecha_pedido`, `
 
 CREATE TABLE `usuarios` (
   `user` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `rol` char(1) DEFAULT NULL CHECK (`rol` in ('A','R')),
   `mail` varchar(100) NOT NULL,
   `path_image` varchar(255) NOT NULL DEFAULT '../assets/images/users/674f64281c8c9.png'
@@ -136,9 +123,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`, `path_image`) VALUES
-('a', 'a', 'R', 'a@a.a', '../assets/images/users/674f5217e5ea5.jpg'),
+('a', 'a', 'R', 'a@a.a', '../assets/images/users/6751e7547505c.png'),
+('aa', '$2y$10$t43MBqcIPirQOpupBSoCNegF48kQnNK7jH9exUrdtRe1jWZ4IsGO.', 'A', 'aa@aa', '../assets/images/users/674f64281c8c9.png'),
 ('admin', '1234', 'A', 'admin@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png'),
 ('asd', 'asd', 'R', 'admin@lolaccs.es', '../assets/images/users/674f64281c8c9.png'),
+('pwtest', '$2y$10$6S4rtWd0ScewGWankNxC4uV4vUo0dy4A.h/mcle.VGY', 'R', 'pwtest@pwtest', '../assets/images/users/674f64281c8c9.png'),
 ('registrado', '1234', 'R', 'registrado@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png');
 
 --
@@ -152,17 +141,17 @@ ALTER TABLE `cuentas`
   ADD PRIMARY KEY (`id_cuenta`);
 
 --
--- Indices de la tabla `pagos`
+-- Indices de la tabla `cuentasproveedor`
 --
-ALTER TABLE `pagos`
-  ADD PRIMARY KEY (`id_pago`),
-  ADD KEY `fk_pago_pedido` (`id_pedido`);
+ALTER TABLE `cuentasproveedor`
+  ADD PRIMARY KEY (`ID_Proveedor`,`ID_Cuenta`),
+  ADD KEY `ID_Cuenta` (`ID_Cuenta`);
 
 --
--- Indices de la tabla `pedidos`
+-- Indices de la tabla `proveedores`
 --
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id_pedido`);
+ALTER TABLE `proveedores`
+  ADD PRIMARY KEY (`ID_Proveedor`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -181,26 +170,21 @@ ALTER TABLE `cuentas`
   MODIFY `id_cuenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `pagos`
+-- AUTO_INCREMENT de la tabla `proveedores`
 --
-ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `proveedores`
+  MODIFY `ID_Proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `pagos`
+-- Filtros para la tabla `cuentasproveedor`
 --
-ALTER TABLE `pagos`
-  ADD CONSTRAINT `fk_pago_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id_pedido`) ON DELETE CASCADE;
+ALTER TABLE `cuentasproveedor`
+  ADD CONSTRAINT `cuentasproveedor_ibfk_1` FOREIGN KEY (`ID_Proveedor`) REFERENCES `proveedores` (`ID_Proveedor`),
+  ADD CONSTRAINT `cuentasproveedor_ibfk_2` FOREIGN KEY (`ID_Cuenta`) REFERENCES `cuentas` (`id_cuenta`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

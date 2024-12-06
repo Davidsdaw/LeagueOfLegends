@@ -16,12 +16,13 @@
     if (isset($_SESSION['usuario'])) {
         header("Location: ../index.php");
     }
-    inactividad();
 
 
     $resultado = [];
     $resultado2 = '';
     $resultadopw = '';
+    $errores = [];
+    $userfreeze = '';
 
     connect_bd();
     $error = '&nbsp';
@@ -32,13 +33,11 @@
 
         $resultado = registrarusuario($usuario, $password, $email);
 
-        if ($resultado[0] != $email) {
-            $error = $resultado[1];
-        } else if ($resultado[1] != '') {
-            $resultado2 = $resultado[0];
-            $error = $resultado[1];
-            $resultadopw = $resultado[2];
-        }
+        $resultado2 = $resultado[0];
+        $error = $resultado[1];
+        $resultadopw = $resultado[2];
+        $errores = $resultado[3];
+        $userfreeze = $resultado[4];
     }
     ?>
     <div class="session">
@@ -48,7 +47,7 @@
             <h4>Registrate</h4>
             <p class="descripcion">Crea tu cuenta y únete a la plataforma líder en compra y venta de cuentas.</p>
             <div class="floating-label">
-                <input placeholder="Usuario" type="text" name="usuario" id="usuario" autocomplete="off" required>
+                <input placeholder="Usuario" type="text" name="usuario" id="usuario" autocomplete="off" required <?php if ($userfreeze !== '') echo "value='$userfreeze'"; ?>>
                 <label for="usuario">Usuario:</label>
             </div>
             <div class="floating-label">
@@ -60,6 +59,12 @@
                 <label for="email">Email:</label>
             </div>
             <p class="error" id="error"><?php echo $error; ?></p>
+            <?php
+            if ($errores) {
+                foreach ($errores as $key) {
+                    echo "<p class='error' id='error'>" . $key . "</p>";
+                }
+            } ?>
             <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
             <button id="reg" type="submit">Registrar</button>
         </form>
