@@ -165,7 +165,7 @@
         }
     }
 
-    function obtenerCuentasFiltro($rango,$champs,$precio)
+    function obtenerCuentasFiltro($rango, $champs, $precio)
     {
         connect_bd();
         global $pdo;
@@ -176,7 +176,7 @@
             $params = [];
 
             // Agregar filtros dinámicamente
-            if ($rango!='ALL') {
+            if ($rango != 'ALL') {
                 $query .= " AND rango = :rango";
                 $params[':rango'] = $rango;
             }
@@ -201,7 +201,6 @@
             $accounts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
             return $accounts;
-
         } catch (PDOException $excepcion) {
             echo "Error en la base de datos: " . $excepcion->getMessage();
             return []; // En caso de error, devuelve un array vacío
@@ -328,21 +327,23 @@
         header("Location: ../index.php");
     }
 
-    function inactividad(){
+    function inactividad()
+    {
         $inactivityLimit = 300;  //5 minutos
-if (isset($_SESSION['last_activity'])) {
-    $timeElapsed = time() - $_SESSION['last_activity']; 
-    if ($timeElapsed > $inactivityLimit) {
-        session_unset();
-        session_destroy();
-        header("Location: ../index.php?message=inactivity");
-        exit();
-    }
-}
-$_SESSION['last_activity'] = time();
+        if (isset($_SESSION['last_activity'])) {
+            $timeElapsed = time() - $_SESSION['last_activity'];
+            if ($timeElapsed > $inactivityLimit) {
+                session_unset();
+                session_destroy();
+                header("Location: ../index.php?message=inactivity");
+                exit();
+            }
+        }
+        $_SESSION['last_activity'] = time();
     }
 
-    function mostrarDatos(){
+    function mostrarDatos()
+    {
         connect_bd();
         global $pdo;
         try {
@@ -358,7 +359,8 @@ $_SESSION['last_activity'] = time();
         }
     }
 
-    function mostrarCuentas(){
+    function mostrarCuentas()
+    {
         connect_bd();
         global $pdo;
         try {
@@ -383,13 +385,121 @@ $_SESSION['last_activity'] = time();
             $statementRelacionados = $pdo->prepare($queryRelacionados);
             $statementRelacionados->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
             $statementRelacionados->execute();
-    
+
             // Ahora eliminar la cuenta de la tabla "cuentas"
             $query = "DELETE FROM cuentas WHERE id_cuenta = :id_cuenta";
             $statement = $pdo->prepare($query);
             $statement->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
             $statement->execute();
-    
+
+            return true; // Operación exitosa
+        } catch (PDOException $excepcion) {
+            echo "Error al eliminar la cuenta: " . $excepcion->getMessage();
+            return false;
+        }
+    }
+
+    function añadirCuenta($rp, $rango, $precio, $estado, $be, $region, $nivel, $campeones, $skins, $id_proveedor)
+    {
+        connect_bd(); // Conectar a la base de datos
+        global $pdo; // Usar la variable $pdo
+        try {
+            // Insertar los datos en la tabla "cuentas"
+            $queryCuenta = "INSERT INTO cuentas (rp, rango, precio, estado, be, region, nivel, campeones, skins) 
+                    VALUES (:rp, :rango, :precio, :estado, :be, :region, :nivel, :campeones, :skins)";
+            $statementCuenta = $pdo->prepare($queryCuenta);
+            $statementCuenta->bindParam(':rp', $rp, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':rango', $rango, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':precio', $precio, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':estado', $estado, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':be', $be, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':region', $region, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':nivel', $nivel, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':campeones', $campeones, PDO::PARAM_STR);
+            $statementCuenta->bindParam(':skins', $skins, PDO::PARAM_STR);
+            $statementCuenta->execute();
+
+            // Obtener el id_cuenta generado automáticamente
+            $id_cuenta = $pdo->lastInsertId();
+        } catch (PDOException $excepcion) {
+            echo "Error al insertar la cuenta: " . $excepcion->getMessage();
+            return false;
+        }
+        try {
+            // Insertar la relación en la tabla "cuentasproveedor"
+            $queryRelacionados = "INSERT INTO cuentasproveedor (ID_Cuenta, id_proveedor) 
+                          VALUES (:id_cuenta, :id_proveedor)";
+            $statementRelacionados = $pdo->prepare($queryRelacionados);
+            $statementRelacionados->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
+            $statementRelacionados->bindParam(':id_proveedor', $id_proveedor, PDO::PARAM_INT);
+            $statementRelacionados->execute();
+
+            echo "Cuenta añadida exitosamente.";
+            return true; // Operación exitosa
+        } catch (PDOException $excepcion) {
+            echo "Error al añadir la relación con el proveedor: " . $excepcion->getMessage();
+            return false;
+        }
+    }
+
+
+    function mostrarUsuarios()
+    {
+        try {
+            connect_bd();
+            global $pdo;
+
+            $query = "SELECT user, password, rol, mail FROM usuarios";
+            $statement = $pdo->prepare($query);
+            $statement->execute();
+
+            return $statement->fetchAll(PDO::FETCH_ASSOC); // Devuelve los resultados como un array asociativo
+        } catch (PDOException $excepcion) {
+            echo "Error al obtener los usuarios: " . $excepcion->getMessage();
+            return [];
+        }
+    }
+
+
+    function insertarUsuario($user, $password, $rol, $mail)
+    {
+        // Conectar a la base de datos
+        connect_bd();  // Asegúrate de que esta línea devuelva una conexión válida
+        global $pdo;
+
+        try {
+            // Preparar la consulta SQL para insertar el usuario
+            $query = "INSERT INTO usuarios (user, password, rol, mail) VALUES (:user, :password, :rol, :mail)";
+            $statement = $pdo->prepare($query);
+
+            // Hashear la contraseña antes de guardarla
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Vincular los parámetros
+            $statement->bindParam(':user', $user, PDO::PARAM_STR);
+            $statement->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+            $statement->bindParam(':rol', $rol, PDO::PARAM_STR);
+            $statement->bindParam(':mail', $mail, PDO::PARAM_STR);
+
+            // Ejecutar la consulta
+            return $statement->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    function eliminarUsuario($email)
+    {
+        connect_bd(); // Conectar a la base de datos
+        global $pdo; // Usar la variable $pdo
+        try {
+            // Ahora eliminar la cuenta de la tabla "cuentas"
+            $query = "DELETE FROM usuarios WHERE email = :mail";
+            $statement = $pdo->prepare($query);
+            $statement->bindParam(':mail', $email, PDO::PARAM_INT);
+            $statement->execute();
+
             return true; // Operación exitosa
         } catch (PDOException $excepcion) {
             echo "Error al eliminar la cuenta: " . $excepcion->getMessage();

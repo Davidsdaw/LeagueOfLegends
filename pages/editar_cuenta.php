@@ -1,3 +1,4 @@
+
 <?php
 include 'funciones.php';
 
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "UPDATE cuentas SET rp = :rp, rango = :rango, precio = :precio, estado = :estado, 
                   be = :be, region = :region, nivel = :nivel, campeones = :campeones, skins = :skins 
                   WHERE id_cuenta = :id_cuenta";
-        
+
         $statement = $pdo->prepare($query);
         $statement->bindParam(':rp', $rp);
         $statement->bindParam(':rango', $rango);
@@ -31,13 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $statement->bindParam(':campeones', $campeones);
         $statement->bindParam(':skins', $skins);
         $statement->bindParam(':id_cuenta', $id_cuenta);
-        
+
         $statement->execute();
-        
+
         echo "Cuenta actualizada correctamente!";
         header("Location: añadircuenta.php");
     } catch (PDOException $e) {
         echo "Error al actualizar la cuenta: " . $e->getMessage();
     }
 }
+
 ?>

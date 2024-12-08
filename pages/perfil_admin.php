@@ -31,7 +31,7 @@
                     <li><a href="#" onclick="mostrarSeccion('datos')">Datos</a></li>
                     <li><a href="#" onclick="mostrarSeccion('admin-cuentas')">Administrar Cuentas</a></li>
                     <li><a href="#" onclick="mostrarSeccion('admin-usuario')">Administrar Usuario</a></li>
-                    <li><a href="#logout" class="">Cerrar Sesión</a></li>
+                    <li><a href="./logout.php" class="">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </aside>
@@ -40,64 +40,51 @@
         <main class="main-content">
             <!-- Sección para Administrar Cuentas -->
             <section id="datos">
-                <?php $datos = mostrarDatos();?>
+                <?php $datos = mostrarDatos(); ?>
                 <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Datos de Proveedores</h1>
-    <div class="flex justify-center">
-        <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Nombre del Proveedor</th>
-                    <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Número de Cuentas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($datos as $fila) {
-                    echo "<tr>";
-                    echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$fila['Nombre_Proveedor']}</td>";
-                    echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$fila['Numero_De_Cuentas']}</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+                <div class="flex justify-center">
+                    <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Nombre del Proveedor</th>
+                                <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Número de Cuentas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($datos as $fila) {
+                                echo "<tr>";
+                                echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$fila['Nombre_Proveedor']}</td>";
+                                echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$fila['Numero_De_Cuentas']}</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
 
             </section>
             <section id="admin-cuentas" class="hidden">
-                <h1>Selecciona una Opción</h1>
+
                 <div class="container-cards">
-                    <div class="card-usuario" onclick="mostrarSeccion('add-cuenta')">
-                        <h3>Añadir Cuenta</h3>
+                    <div class="card-usuario">
+                        <a href="./añadircuenta.php">
+                            Administrar Cuenta
+                        </a>
                         <i class="fa-solid fa-plus"></i>
-                    </div>
-                    <div class="card-usuario" onclick="mostrarSeccion('edit-cuenta')">
-                        <h3>Editar Cuenta</h3>
-                        <i class="fa-solid fa-newspaper"></i>
-                    </div>
-                    <div class="card-usuario" onclick="mostrarSeccion('delete-cuenta')">
-                        <h3>Eliminar Cuenta</h3>
-                        <i class="fa-solid fa-user-minus"></i>
                     </div>
                 </div>
             </section>
 
             <!-- Sección para Administrar Usuarios -->
             <section id="admin-usuario" class="hidden">
-                <h1>Selecciona una Opción</h1>
+
                 <div class="container-cards">
-                    <div class="card-usuario" onclick="mostrarSeccion('add-user')">
-                        <h3>Añadir Usuario</h3>
+                    <div class="card-usuario">
+                        <a href="./usuarios.php"> Administrar Usuario</a>
                         <i class="fa-solid fa-plus"></i>
                     </div>
-                    <div class="card-usuario" onclick="mostrarSeccion('edit-user')">
-                        <h3>Editar Usuario</h3>
-                        <i class="fa-solid fa-newspaper"></i>
-                    </div>
-                    <div class="card-usuario" onclick="mostrarSeccion('delete-user')">
-                        <h3>Eliminar Usuario</h3>
-                        <i class="fa-solid fa-user-minus"></i>
-                    </div>
+
                 </div>
             </section>
 
@@ -138,19 +125,19 @@
             <!-- Sección Agregar Cuenta -->
             <section id="add-cuenta" class="hidden">
                 <h1>Agregar Cuenta</h1>
-    <form method="POST">
-        <input type="hidden" name="id_cuenta" id="id_cuenta">
-        <label>RP:</label> <input type="number" name="rp" id="rp" required><br>
-        <label>Rango:</label> <input type="text" name="rango" id="rango" required><br>
-        <label>Precio:</label> <input type="number" name="precio" id="precio" step="0.01" required><br>
-        <label>Estado:</label> <input type="text" name="estado" id="estado" required><br>
-        <label>BE:</label> <input type="number" name="be" id="be" required><br>
-        <label>Región:</label> <input type="text" name="region" id="region" required><br>
-        <label>Nivel:</label> <input type="number" name="nivel" id="nivel" required><br>
-        <label>Campeones:</label> <input type="number" name="campeones" id="campeones" required><br>
-        <label>Skins:</label> <input type="number" name="skins" id="skins" required><br>
-        <button type="submit" name="add">Agregar</button>
-    </form>
+                <form method="POST">
+                    <input type="hidden" name="id_cuenta" id="id_cuenta">
+                    <label>RP:</label> <input type="number" name="rp" id="rp" required><br>
+                    <label>Rango:</label> <input type="text" name="rango" id="rango" required><br>
+                    <label>Precio:</label> <input type="number" name="precio" id="precio" step="0.01" required><br>
+                    <label>Estado:</label> <input type="text" name="estado" id="estado" required><br>
+                    <label>BE:</label> <input type="number" name="be" id="be" required><br>
+                    <label>Región:</label> <input type="text" name="region" id="region" required><br>
+                    <label>Nivel:</label> <input type="number" name="nivel" id="nivel" required><br>
+                    <label>Campeones:</label> <input type="number" name="campeones" id="campeones" required><br>
+                    <label>Skins:</label> <input type="number" name="skins" id="skins" required><br>
+                    <button type="submit" name="add">Agregar</button>
+                </form>
             </section>
 
             <!-- Sección Editar Cuenta -->
