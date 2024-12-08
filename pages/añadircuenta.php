@@ -26,7 +26,14 @@
         }
     }
     ?>
-    <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Administrar Cuentas</h1>
+    <div class="flex flex-row gap-8 items-center justify-center  text-center">
+        <h1 class="text-2xl font-bold text-gray-700 my-6">Administrar Cuentas</h1>
+        <button class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700">
+            <a href="./perfil_admin.php">Volver</a>
+        </button>
+    </div>
+
+
     <div class="flex justify-center">
         <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md w-3/4">
             <thead>
@@ -175,6 +182,7 @@
             <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Añadir Cuenta</button>
             <button type="button" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600" onclick="hideAddForm()">Cancelar</button>
         </form>
+
         <script>
             // Muestra el formulario con los datos de la cuenta al hacer clic en "Editar"
             const editButtons = document.querySelectorAll('.edit-button');

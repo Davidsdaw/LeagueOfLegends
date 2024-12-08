@@ -25,7 +25,14 @@
         }
     }
     ?>
-    <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Administrar Usuarios</h1>
+    <div class="flex flex-row gap-8 items-center justify-center  text-center">
+        <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Administrar Usuarios</h1>
+        <button class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700">
+            <a href="./perfil_admin.php">Volver</a>
+        </button>
+    </div>
+
+
     <div class="flex justify-center">
         <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md w-3/4">
             <thead>
