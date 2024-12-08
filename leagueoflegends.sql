@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2024 a las 20:40:42
+-- Tiempo de generación: 08-12-2024 a las 20:04:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `cuentas` (
 --
 
 INSERT INTO `cuentas` (`id_cuenta`, `rp`, `rango`, `precio`, `estado`, `be`, `region`, `nivel`, `campeones`, `skins`) VALUES
-(1, 3200, 'Plata', 55.00, 'disponible', 5000, 'EUW', 5, 10, 5),
+(1, 3200, 'Plata', 55.00, 'disponible', 5000, 'EUW', 5, 10, 9),
 (2, 4500, 'Oro', 85.00, 'disponible', 7000, 'EUW', 10, 20, 15),
 (3, 6000, 'Platino', 105.00, 'vendido', 9000, 'EUW', 15, 30, 25),
 (4, 7500, 'Diamante', 155.00, 'disponible', 11000, 'EUW', 20, 40, 35),
@@ -126,7 +126,8 @@ INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`, `path_image`) VALUES
 ('a', 'a', 'R', 'a@a.a', '../assets/images/users/6751e7547505c.png'),
 ('aa', '$2y$10$t43MBqcIPirQOpupBSoCNegF48kQnNK7jH9exUrdtRe1jWZ4IsGO.', 'A', 'aa@aa', '../assets/images/users/674f64281c8c9.png'),
 ('admin', '1234', 'A', 'admin@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png'),
-('asd', 'asd', 'R', 'admin@lolaccs.es', '../assets/images/users/674f64281c8c9.png'),
+('Asdasd123!', 'asdasd', 'R', 'Asdasd123@Asdasd123', '../assets/images/users/674f64281c8c9.png'),
+('Asdasd123!!', '$2y$10$xCDjFwi9pLX9iYIQfHNhi.iQfPtHgeKEOPtqeEDyd1ka34llTdELK', 'R', 'Asdasd123!@a', '../assets/images/users/674f64281c8c9.png'),
 ('pwtest', '$2y$10$6S4rtWd0ScewGWankNxC4uV4vUo0dy4A.h/mcle.VGY', 'R', 'pwtest@pwtest', '../assets/images/users/674f64281c8c9.png'),
 ('registrado', '1234', 'R', 'registrado@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png');
 

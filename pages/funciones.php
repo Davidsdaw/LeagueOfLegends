@@ -342,6 +342,61 @@ if (isset($_SESSION['last_activity'])) {
 $_SESSION['last_activity'] = time();
     }
 
+    function mostrarDatos(){
+        connect_bd();
+        global $pdo;
+        try {
+            $query = "SELECT p.Nombre_Proveedor, COUNT(cp.ID_Cuenta) AS Numero_De_Cuentas FROM Proveedores p LEFT JOIN CuentasProveedor cp ON p.ID_Proveedor = cp.ID_Proveedor GROUP BY p.ID_Proveedor;";
+            $statement = $pdo->prepare($query); // Usamos prepare para mayor seguridad
+            $statement->execute(); // Ejecutamos la consulta
+
+            $accounts = $statement->fetchAll(PDO::FETCH_ASSOC); // Obtenemos todos los resultados como un array asociativo
+            return $accounts;
+        } catch (PDOException $excepcion) {
+            echo "Error en la base de datos: " . $excepcion->getMessage();
+            return []; // En caso de error, devuelve un array vacío
+        }
+    }
+
+    function mostrarCuentas(){
+        connect_bd();
+        global $pdo;
+        try {
+            $query = "SELECT * FROM cuentas";
+            $statement = $pdo->prepare($query); // Usamos prepare para mayor seguridad
+            $statement->execute(); // Ejecutamos la consulta
+
+            $accounts = $statement->fetchAll(PDO::FETCH_ASSOC); // Obtenemos todos los resultados como un array asociativo
+            return $accounts;
+        } catch (PDOException $excepcion) {
+            echo "Error en la base de datos: " . $excepcion->getMessage();
+            return []; // En caso de error, devuelve un array vacío
+        }
+    }
+    function eliminarCuenta($id_cuenta)
+    {
+        connect_bd(); // Conectar a la base de datos
+        global $pdo; // Usar la variable $pdo
+        try {
+            // Eliminar los registros relacionados en la tabla "cuentasproveedor"
+            $queryRelacionados = "DELETE FROM cuentasproveedor WHERE ID_Cuenta = :id_cuenta";
+            $statementRelacionados = $pdo->prepare($queryRelacionados);
+            $statementRelacionados->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
+            $statementRelacionados->execute();
+    
+            // Ahora eliminar la cuenta de la tabla "cuentas"
+            $query = "DELETE FROM cuentas WHERE id_cuenta = :id_cuenta";
+            $statement = $pdo->prepare($query);
+            $statement->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
+            $statement->execute();
+    
+            return true; // Operación exitosa
+        } catch (PDOException $excepcion) {
+            echo "Error al eliminar la cuenta: " . $excepcion->getMessage();
+            return false;
+        }
+    }
+
     ?>
 </body>
 
