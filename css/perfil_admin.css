@@ -96,3 +96,106 @@ button {
 button:hover {
     background-color: #2980b9;
 }
+
+.si {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+
+/* Contenedor de las tarjetas */
+.container-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    /* Espaciado entre las tarjetas */
+    margin-top: 30px;
+    /* Separación de la parte superior */
+    flex-wrap: wrap;
+    /* Permite que las tarjetas se adapten en varias filas si hay poco espacio */
+}
+
+
+/* Estilo para las tarjetas */
+.card-usuario {
+    width: 220px;
+    height: 160px;
+    background-color: #ffffff;
+    /* Fondo blanco */
+    border-radius: 12px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* Alinea el contenido */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre la tarjeta */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Animación para hover */
+}
+
+
+/* Efecto hover */
+.card-usuario:hover {
+    transform: translateY(-10px);
+    /* Eleva la tarjeta */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    /* Sombra más intensa */
+    background-color: #f8f9fa;
+    /* Color de fondo ligeramente diferente */
+}
+
+
+/* Títulos dentro de las tarjetas */
+.card-usuario h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333333;
+    /* Color del texto */
+}
+
+
+/* Iconos dentro de las tarjetas */
+.card-usuario i {
+    font-size: 2.5rem;
+    /* Tamaño de los iconos */
+    color: #6c757d;
+    /* Color de los iconos */
+    margin-top: 10px;
+}
+
+
+/* Estilo del título principal */
+#admin-usuario h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #212529;
+    /* Color oscuro */
+    margin-bottom: 20px;
+}
+
+
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .container-cards {
+        flex-direction: column;
+        /* Las tarjetas se apilan verticalmente */
+        gap: 20px;
+    }
+
+
+    .card-usuario {
+        width: 90%;
+        /* Ocupa el 90% del ancho disponible */
+        height: 140px;
+        /* Altura ajustada */
+    }
+}

@@ -20,3 +20,34 @@ document.querySelectorAll('.faq-question').forEach(button => {
         faqItem.classList.toggle('active');
     });
 });
+
+function mostrarSeccion(idSeccion) {
+    // Oculta todas las secciones excepto el menú de tarjetas
+    const secciones = document.querySelectorAll('main section');
+    secciones.forEach((seccion) => {
+        seccion.classList.add('hidden');
+    });
+
+
+    // Muestra la sección seleccionada
+    const seccionSeleccionada = document.getElementById(idSeccion);
+    if (seccionSeleccionada) {
+        seccionSeleccionada.classList.remove('hidden');
+    }
+}
+
+
+function mostrarSeccion(idSeccion) {
+    // Oculta todas las secciones excepto el menú de tarjetas
+    const secciones = document.querySelectorAll('main section');
+    secciones.forEach((seccion) => {
+        seccion.classList.add('hidden');
+    });
+
+
+    // Muestra la sección seleccionada
+    const seccionSeleccionada = document.getElementById(idSeccion);
+    if (seccionSeleccionada) {
+        seccionSeleccionada.classList.remove('hidden');
+    }
+}

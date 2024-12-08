@@ -1,13 +1,11 @@
-const menuLinks = document.querySelectorAll('.sidebar nav a');
-const contentSections = document.querySelectorAll('main section');
+function mostrarSeccion(seccionID) {
+    // Ocultar todas las secciones
+    const secciones = document.querySelectorAll('main section');
+    secciones.forEach(seccion => seccion.classList.add('hidden'));
 
-menuLinks.forEach(menuLink => {
-    menuLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        menuLinks.forEach(link => link.classList.remove('active'));
-        contentSections.forEach(section => section.classList.add('hidden'));
-        menuLink.classList.add('active');
-        const targetSection = document.querySelector(menuLink.getAttribute('href'));
-        targetSection.classList.remove('hidden');
-    });
-});
+    // Mostrar la sección específica
+    const seccionActiva = document.getElementById(seccionID);
+    if (seccionActiva) {
+        seccionActiva.classList.remove('hidden');
+    }
+}
