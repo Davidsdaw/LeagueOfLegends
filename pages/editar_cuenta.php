@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nivel = $_POST['nivel'];
     $campeones = $_POST['campeones'];
     $skins = $_POST['skins'];
-
+    print_r($_POST);
     connect_bd();
     global $pdo;
     try {

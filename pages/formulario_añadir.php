@@ -11,9 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nivel = $_POST['nivel'];
     $campeones = $_POST['campeones'];
     $skins = $_POST['skins'];
-    $id_proveedor = $_POST['id_proveedor'];
     // Llamar a la función para añadir la cuenta
-    $resultado = añadirCuenta($rp, $rango, $precio, $estado, $be, $region, $nivel, $campeones, $skins, $id_proveedor);
+    $resultado = añadirCuenta($rp, $rango, $precio, $estado, $be, $region, $nivel, $campeones, $skins);
 
     if ($resultado) {
         echo "Cuenta añadida con éxito.";

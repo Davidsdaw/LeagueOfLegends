@@ -78,7 +78,7 @@
                                         <button type='submit' class='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'>Eliminar</button>
                                     </form>
  <!-- Botón para mostrar el formulario de añadir cuenta -->
-                <button type='button' class='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' onclick='showAddForm()'>Añadir Cuenta</button>
+                
                                 </td>";
                         echo "</tr>";
                     }
@@ -89,99 +89,150 @@
                 ?>
             </tbody>
         </table>
+        <?php echo "<button type='button' class='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' onclick='showAddForm()'>Añadir Cuenta</button>" ?>
     </div>
-    <div id="edit-form-container" class="hidden">
-        <form method="POST" action="editar_cuenta.php">
-            <input type="hidden" name="id_cuenta" id="edit-id_cuenta">
+    <div id="edit-form-container" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center overflow-auto">
+    
+    <form method="POST" action="editar_cuenta.php" 
+          class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md mx-auto my-8 space-y-4 overflow-auto max-h-[90vh]">
+        <h2 class="text-2xl font-semibold text-gray-700 text-center">Editar Cuenta</h2>
 
-            <div>
-                <label for="edit-rp">RP:</label>
-                <input type="number" name="rp" id="edit-rp" required>
-            </div>
-            <div>
-                <label for="edit-rango">Rango:</label>
-                <input type="text" name="rango" id="edit-rango" required>
-            </div>
-            <div>
-                <label for="edit-precio">Precio:</label>
-                <input type="number" name="precio" id="edit-precio" step="0.01" required>
-            </div>
-            <div>
-                <label for="edit-estado">Estado:</label>
-                <input type="text" name="estado" id="edit-estado" required>
-            </div>
-            <div>
-                <label for="edit-be">BE:</label>
-                <input type="number" name="be" id="edit-be" required>
-            </div>
-            <div>
-                <label for="edit-region">Región:</label>
-                <input type="text" name="region" id="edit-region" required>
-            </div>
-            <div>
-                <label for="edit-nivel">Nivel:</label>
-                <input type="number" name="nivel" id="edit-nivel" required>
-            </div>
-            <div>
-                <label for="edit-campeones">Campeones:</label>
-                <input type="number" name="campeones" id="edit-campeones" required>
-            </div>
-            <div>
-                <label for="edit-skins">Skins:</label>
-                <input type="number" name="skins" id="edit-skins" required>
-            </div>
-            <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Actualizar</button>
-            <button type="button" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600" onclick="cancelEdit()">Cancelar</button>
-        </form>
+        <input type="hidden" name="id_cuenta" id="edit-id_cuenta">
 
-    </div>
+        <div class="space-y-2">
+            <label for="edit-rp" class="block text-gray-600 font-medium">RP:</label>
+            <input type="number" name="rp" id="edit-rp" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-rango" class="block text-gray-600 font-medium">Rango:</label>
+            <input type="text" name="rango" id="edit-rango" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-precio" class="block text-gray-600 font-medium">Precio:</label>
+            <input type="number" name="precio" id="edit-precio" step="0.01" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="estado" class="block text-gray-600 font-medium">Estado:</label>
+    <select name="estado" id="edit-estado" required
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        <option value="Disponible">Disponible</option>
+        <option value="Vendido">Vendida</option>
+    </select>
+        </div>
+        <div class="space-y-2">
+            <label for="edit-be" class="block text-gray-600 font-medium">BE:</label>
+            <input type="number" name="be" id="edit-be" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-region" class="block text-gray-600 font-medium">Región:</label>
+            <input type="text" name="region" id="edit-region" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-nivel" class="block text-gray-600 font-medium">Nivel:</label>
+            <input type="number" name="nivel" id="edit-nivel" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-campeones" class="block text-gray-600 font-medium">Campeones:</label>
+            <input type="number" name="campeones" id="edit-campeones" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="edit-skins" class="block text-gray-600 font-medium">Skins:</label>
+            <input type="number" name="skins" id="edit-skins" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div class="flex justify-between space-x-2">
+            <button type="submit"
+                class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg">Actualizar</button>
+            <button type="button" onclick="cancelEdit()"
+                class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 rounded-lg">Cancelar</button>
+        </div>
+    </form>
+</div>
     <!-- Formulario de añadir cuenta (inicialmente oculto) -->
-    <div id="add-form-container" class="hidden">
-        <form method="POST" action="formulario_añadir.php">
-            <div>
-                <label for="rp">RP:</label>
-                <input type="number" name="rp" id="rp" required>
-            </div>
-            <div>
-                <label for="rango">Rango:</label>
-                <input type="text" name="rango" id="rango" required>
-            </div>
-            <div>
-                <label for="precio">Precio:</label>
-                <input type="number" name="precio" id="precio" step="0.01" required>
-            </div>
-            <div>
-                <label for="estado">Estado:</label>
-                <input type="text" name="estado" id="estado" required>
-            </div>
-            <div>
-                <label for="be">BE:</label>
-                <input type="number" name="be" id="be" required>
-            </div>
-            <div>
-                <label for="region">Región:</label>
-                <input type="text" name="region" id="region" required>
-            </div>
-            <div>
-                <label for="nivel">Nivel:</label>
-                <input type="number" name="nivel" id="nivel" required>
-            </div>
-            <div>
-                <label for="campeones">Campeones:</label>
-                <input type="number" name="campeones" id="campeones" required>
-            </div>
-            <div>
-                <label for="skins">Skins:</label>
-                <input type="number" name="skins" id="skins" required>
-            </div>
-            <div>
-                <label for="id_proveedor">Proveedor:</label>
-                <input type="text" name="id_proveedor" id="id_proveedor" required>
-            </div>
+    <div id="add-form-container" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center overflow-auto">
+    <form method="POST" action="formulario_añadir.php" 
+          class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md mx-auto my-8 space-y-4 overflow-auto max-h-[90vh]">
+        <h2 class="text-2xl font-semibold text-gray-700 text-center">Añadir Cuenta</h2>
 
-            <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Añadir Cuenta</button>
-            <button type="button" class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600" onclick="hideAddForm()">Cancelar</button>
-        </form>
+        <div class="space-y-2">
+            <label for="rp" class="block text-gray-600 font-medium">RP:</label>
+            <input type="number" name="rp" id="rp" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="rango" class="block text-gray-600 font-medium">Rango:</label>
+            <input type="text" name="rango" id="rango" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="precio" class="block text-gray-600 font-medium">Precio:</label>
+            <input type="number" name="precio" id="precio" step="0.01" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+        <label for="estado" class="block text-gray-600 font-medium">Estado:</label>
+    <select name="estado" id="estado" required
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        <option value="Disponible">Disponible</option>
+        <option value="Vendido">Vendida</option>
+    </select>
+        </div>
+        <div class="space-y-2">
+            <label for="be" class="block text-gray-600 font-medium">BE:</label>
+            <input type="number" name="be" id="be" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="region" class="block text-gray-600 font-medium">Región:</label>
+            <input type="text" name="region" id="region" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="nivel" class="block text-gray-600 font-medium">Nivel:</label>
+            <input type="number" name="nivel" id="nivel" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="campeones" class="block text-gray-600 font-medium">Campeones:</label>
+            <input type="number" name="campeones" id="campeones" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+        <div class="space-y-2">
+            <label for="skins" class="block text-gray-600 font-medium">Skins:</label>
+            <input type="number" name="skins" id="skins" required
+                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div class="flex justify-between space-x-2">
+            <button type="submit"
+                class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg">Añadir
+                Cuenta</button>
+            <button type="button" onclick="hideAddForm()"
+                class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 rounded-lg">Cancelar</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Función para mostrar el formulario de añadir cuenta
+    function showAddForm() {
+        document.getElementById('add-form-container').classList.remove('hidden');
+    }
+
+    // Función para ocultar el formulario de añadir cuenta
+    function hideAddForm() {
+        document.getElementById('add-form-container').classList.add('hidden');
+    }
+</script>
+
 
         <script>
             // Muestra el formulario con los datos de la cuenta al hacer clic en "Editar"

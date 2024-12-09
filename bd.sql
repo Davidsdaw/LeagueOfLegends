@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2024 a las 20:04:13
+-- Tiempo de generación: 09-12-2024 a las 01:58:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -123,13 +123,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`user`, `password`, `rol`, `mail`, `path_image`) VALUES
-('a', 'a', 'R', 'a@a.a', '../assets/images/users/6751e7547505c.png'),
-('aa', '$2y$10$t43MBqcIPirQOpupBSoCNegF48kQnNK7jH9exUrdtRe1jWZ4IsGO.', 'A', 'aa@aa', '../assets/images/users/674f64281c8c9.png'),
-('admin', '1234', 'A', 'admin@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png'),
-('Asdasd123!', 'asdasd', 'R', 'Asdasd123@Asdasd123', '../assets/images/users/674f64281c8c9.png'),
-('Asdasd123!!', '$2y$10$xCDjFwi9pLX9iYIQfHNhi.iQfPtHgeKEOPtqeEDyd1ka34llTdELK', 'R', 'Asdasd123!@a', '../assets/images/users/674f64281c8c9.png'),
-('pwtest', '$2y$10$6S4rtWd0ScewGWankNxC4uV4vUo0dy4A.h/mcle.VGY', 'R', 'pwtest@pwtest', '../assets/images/users/674f64281c8c9.png'),
-('registrado', '1234', 'R', 'registrado@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png');
+('admin', '$2y$10$kVjMWJ8ejj.dSHM9kUU2mO3seT0xOYwEDOZcj9yl02po02PWZqdu6', 'A', 'admin@riberadeltajo.es', '../assets/images/users/675632c391523.png'),
+('registrado', '$2y$10$.GX4T35Ehvz/tgndhZAdqOzBlf7d/D2H1jX7SUjHGXITeuDMHbHA6', 'A', 'registrado@riberadeltajo.es', '../assets/images/users/674f64281c8c9.png');
 
 --
 -- Índices para tablas volcadas

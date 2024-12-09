@@ -29,8 +29,7 @@
             <nav>
                 <ul id="li">
                     <li><a href="#" onclick="mostrarSeccion('datos')">Datos</a></li>
-                    <li><a href="#" onclick="mostrarSeccion('admin-cuentas')">Administrar Cuentas</a></li>
-                    <li><a href="#" onclick="mostrarSeccion('admin-usuario')">Administrar Usuario</a></li>
+                    <li><a href="#" onclick="mostrarSeccion('admin-cuentas')">Administrar Aplicacion</a></li>
                     <li><a href="./logout.php" class="">Cerrar Sesión</a></li>
                 </ul>
             </nav>
@@ -74,11 +73,7 @@
                         <i class="fa-solid fa-plus"></i>
                     </div>
                 </div>
-            </section>
-
-            <!-- Sección para Administrar Usuarios -->
-            <section id="admin-usuario" class="hidden">
-
+                
                 <div class="container-cards">
                     <div class="card-usuario">
                         <a href="./usuarios.php"> Administrar Usuario</a>
@@ -86,6 +81,13 @@
                     </div>
 
                 </div>
+
+            </section>
+
+            <!-- Sección para Administrar Usuarios -->
+            <section id="admin-usuario" class="hidden">
+
+
             </section>
 
             <!-- Sección Añadir Usuario -->

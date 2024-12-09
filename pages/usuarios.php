@@ -41,6 +41,7 @@
                     <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Password</th>
                     <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Rol</th>
                     <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Mail</th>
+                    <th class="px-4 py-2 border border-gray-300 bg-gray-100 text-gray-700 font-semibold">Accion</th>
 
                 </tr>
             </thead>
@@ -56,17 +57,20 @@
                         echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$user['rol']}</td>";
                         echo "<td class='px-4 py-2 border border-gray-300 text-gray-600'>{$user['mail']}</td>";
                         echo "<td class='px-4 py-2 border border-gray-300 text-center'>
-                         <!--Añadir usuario -->
-                        <button type='button' class='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' onclick='showAddForm()'>Añadir Usuario</button>
-
+                        
+    <form method='GET' action='editar_user.php' class='inline-block'>
+        <input type='hidden' name='user' value='{$user['user']}'>
+        <button type='submit' class='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700'>
+            Editar
+        </button>
+    </form>
                                 <!-- Formulario para eliminar -->
-                                <form method='POST' action='eliminar_user.php' class='inline-block'>
-                                    <input type='hidden' name='id_usuario' value='{$user['user']}'>
-                                    <button type='submit' name='eliminar_usuario' 
-                                        class='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700'>
-                                        Eliminar
-                                    </button>
-                                </form>
+    <form method='POST' action='eliminar_user.php' class='inline-block'>
+        <input type='hidden' name='user' value='{$user['user']}'>
+        <button type='submit' name='eliminar_usuario' class='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700'>
+            Eliminar
+        </button>
+    </form>
                                 </td>";
 
 
@@ -79,6 +83,7 @@
                 ?>
             </tbody>
         </table>
+        <button type='button' class='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600' onclick='showAddForm()'>Añadir Usuario</button>
     </div>
     <!-- Formulario para añadir usuario (inicialmente oculto) -->
     <div id="addUserForm" class="hidden">

@@ -1,23 +1,20 @@
 <?php
-// Incluir las funciones necesarias
-include 'funciones.php';
+include "funciones.php"; // Asegúrate de que tienes la función para conectar a la base de datos y para eliminar el usuario.
 
-// Verificar si se envió el formulario con el método POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
-    $email = $_POST['email']; // Obtener el ID de la cuenta a eliminar
+if (isset($_POST['eliminar_usuario']) && isset($_POST['user'])) {
+    // Obtener el email del usuario que quieres eliminar
+    $user = $_POST['user'];
 
-    // Llamar a la función para eliminar la cuenta
-    if (eliminarUsuario($email)) {
-        // Redirigir con éxito
-        header("Location: ../pages/usuarios.php");
-        exit;
+    // Llamar a la función eliminarUsuario() para eliminar el usuario de la base de datos
+    if (eliminarUsuario($user)) {
+        // Redirigir o mostrar mensaje de éxito
+        echo "<p class='text-green-500 text-center'>El usuario con el correo $user ha sido eliminado correctamente.</p>";
+        header("Location: ./usuarios.php"); // Redirigir a la página de administración
     } else {
-        // Redirigir con error
-        header("Location: ../pages/administrar_cuentas.php?mensaje=error");
-        exit;
+        echo "<p class='text-red-500 text-center'>Hubo un error al eliminar el usuario con el correo $user.</p>";
     }
 } else {
-    // Si se accede al archivo directamente o no se pasa el ID, redirigir
-    header("Location: ../pages/usuarios.php");
-    exit;
+    echo "<p class='text-red-500 text-center'>No se recibió el correo del usuario.</p>";
 }
+?>
+

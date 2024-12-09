@@ -399,7 +399,7 @@
         }
     }
 
-    function añadirCuenta($rp, $rango, $precio, $estado, $be, $region, $nivel, $campeones, $skins, $id_proveedor)
+    function añadirCuenta($rp, $rango, $precio, $estado, $be, $region, $nivel, $campeones, $skins)
     {
         connect_bd(); // Conectar a la base de datos
         global $pdo; // Usar la variable $pdo
@@ -425,23 +425,7 @@
             echo "Error al insertar la cuenta: " . $excepcion->getMessage();
             return false;
         }
-        try {
-            // Insertar la relación en la tabla "cuentasproveedor"
-            $queryRelacionados = "INSERT INTO cuentasproveedor (ID_Cuenta, id_proveedor) 
-                          VALUES (:id_cuenta, :id_proveedor)";
-            $statementRelacionados = $pdo->prepare($queryRelacionados);
-            $statementRelacionados->bindParam(':id_cuenta', $id_cuenta, PDO::PARAM_INT);
-            $statementRelacionados->bindParam(':id_proveedor', $id_proveedor, PDO::PARAM_INT);
-            $statementRelacionados->execute();
-
-            echo "Cuenta añadida exitosamente.";
-            return true; // Operación exitosa
-        } catch (PDOException $excepcion) {
-            echo "Error al añadir la relación con el proveedor: " . $excepcion->getMessage();
-            return false;
-        }
     }
-
 
     function mostrarUsuarios()
     {
@@ -489,24 +473,80 @@
         }
     }
 
-    function eliminarUsuario($email)
-    {
-        connect_bd(); // Conectar a la base de datos
-        global $pdo; // Usar la variable $pdo
+    function eliminarUsuario($user) {
+        // Conectar a la base de datos
+        connect_bd();
+        global $pdo;
+    
         try {
-            // Ahora eliminar la cuenta de la tabla "cuentas"
-            $query = "DELETE FROM usuarios WHERE email = :mail";
-            $statement = $pdo->prepare($query);
-            $statement->bindParam(':mail', $email, PDO::PARAM_INT);
-            $statement->execute();
+            $query = "DELETE FROM usuarios WHERE user = :user";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':user', $user);
+            $stmt->execute();
 
-            return true; // Operación exitosa
-        } catch (PDOException $excepcion) {
-            echo "Error al eliminar la cuenta: " . $excepcion->getMessage();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Manejar el error en caso de que ocurra
+            echo "Error al eliminar el usuario: " . $e->getMessage();
             return false;
         }
     }
+    function editarUsuario($user, $password, $rol, $mail) {
+        connect_bd();
+        global $pdo;
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("UPDATE usuarios SET user = :user, password = :password, rol = :rol WHERE mail = :mail");
+        $stmt->bindParam(':user', $user);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':rol', $rol);
+        $stmt->bindParam(':mail', $mail);
+    
+        return $stmt->execute();
+    }
 
+    function obtenerUsuarioPorUser($user) {
+        connect_bd();
+        global $pdo;
+    
+        $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE user = :user");
+        $stmt->bindParam(':user', $user);
+        $stmt->execute();
+    
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function actualizarUsuario($old_user, $new_user, $password, $rol, $mail) {
+        connect_bd();   
+        global $pdo;
+        
+        try {
+            $stmt = $pdo->prepare("UPDATE usuarios SET user = :nuevoUsuario, password = :password, rol = :rol, mail = :mail WHERE user = :user");
+            $stmt->execute([
+                ':nuevoUsuario' => $new_user,
+                ':password' => password_hash($password, PASSWORD_DEFAULT),
+                ':rol' => $rol,
+                ':mail' => $mail,
+                ':user' => $old_user,
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return "Error al actualizar usuario: " . $e->getMessage();
+        }
+    }
+
+    function usuarioExiste($user) {
+        connect_bd();
+        global $pdo;
+    
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE user = :user");
+        $stmt->execute([':user' => $user]);
+        return $stmt->fetchColumn() > 0;
+    }
+    
     ?>
 </body>
 
