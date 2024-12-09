@@ -53,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_usuario'])
 </head>
 
 <body>
+<?php
+    if (isset($_SESSION['usuario']) && $_SESSION['rol'] == 'A') {
+    } else header("Location: ../index.php");
+    inactividad();
+    ?>
     <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <h1 class="text-2xl font-bold text-gray-700">Editar Usuario</h1>
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
