@@ -234,14 +234,37 @@
     {
         connect_bd();
         global $pdo;
+        if (strlen($password) < 8) {
+            $errores[] = "Debe tener al menos 8 caracteres.";
+        }
+        // Validar mayúsculas
+        if (!preg_match('/[A-Z]/', $password)) {
+            $errores[] = "Debe incluir al menos una letra mayúscula.";
+        }
+        // Validar minúsculas
+        if (!preg_match('/[a-z]/', $password)) {
+            $errores[] = "Debe incluir al menos una letra minúscula.";
+        }
+        // Validar números
+        if (!preg_match('/\d/', $password)) {
+            $errores[] = "Debe incluir al menos un número.";
+        }
+        // Validar caracteres especiales
+        if (!preg_match('/[@$!%*?&]/', $password)) {
+            $errores[] = "Debe incluir al menos un carácter especial (@$!%*?&).";
+        }
+
         if ($_SESSION['usuario'] == $usuario) {
             try {
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                $qry = "UPDATE usuarios SET password = '$hashedPassword', mail = '$email' WHERE user LIKE '$usuario'";
-                $statement = $pdo->prepare($qry);
-                $statement->execute();
-                // header("Location: paginamain.php");
-                logOut();
+                if(empty($errores)){
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                    $qry = "UPDATE usuarios SET password = '$hashedPassword', mail = '$email' WHERE user LIKE '$usuario'";
+                    $statement = $pdo->prepare($qry);
+                    $statement->execute();
+                    // header("Location: paginamain.php");
+                    logOut();
+                } else return $errores;
+
             } catch (PDOException $excepcion) {
                 echo "Error en la modificación de tipo " . $excepcion->getMessage();
             }
@@ -254,6 +277,7 @@
                 if ($nombres) {
                     return "Usuario no disponible";
                 } else {
+                    if(empty($errores)){
                     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                     $qry2 = "INSERT INTO usuarios VALUES('$usuario','$hashedPassword','R','$email','$foto')";
                     $statement2 = $pdo->prepare($qry2);
@@ -263,6 +287,7 @@
                     $statement3 = $pdo->prepare($qry3);
                     $statement3->execute();
                     logOut();
+                } else return $errores;
                 }
             } catch (PDOException $excepcion) {
                 echo "Error en la modificación de tipo " . $excepcion->getMessage();

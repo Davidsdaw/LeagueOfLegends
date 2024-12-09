@@ -58,26 +58,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_usuario'])
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
     <label class="block text-gray-700">Nombre de Usuario:</label>
-    <input type="text" name="new_user" value="<?php echo htmlspecialchars($usuario['user']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
+    <input type="text" required name="new_user" value="<?php echo htmlspecialchars($usuario['user']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" requiredd>
 </div>
 <input type="hidden" name="old_user" value="<?php echo htmlspecialchars($usuario['user']); ?>">
 
             <div class="mb-4">
                 <label class="block text-gray-700">Contraseña:</label>
-                <input type="password" name="password" value="" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                <input type="password" name="password" required value="" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700">Rol:</label>
                 <select name="rol" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
-                    <option value="A" <?php echo $usuario['rol'] === 'A' ? 'selected' : ''; ?>>Administrador</option>
-                    <option value="U" <?php echo $usuario['rol'] === 'U' ? 'selected' : ''; ?>>Usuario</option>
+                    <option selected value="A" <?php echo $usuario['rol'] === 'A' ? 'selected' : ''; ?>>Administrador</option>
+                    <option value="R" <?php echo $usuario['rol'] === 'R' ? 'selected' : ''; ?>>Usuario</option>
                 </select>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700">Correo:</label>
-                <input type="email" name="mail" value="<?php echo htmlspecialchars($usuario['mail']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                <input type="email" required name="mail" value="<?php echo htmlspecialchars($usuario['mail']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
             </div>
 
             <div class="flex items-center justify-between">

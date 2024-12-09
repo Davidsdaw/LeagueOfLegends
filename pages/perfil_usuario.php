@@ -39,7 +39,7 @@
                 <input type="text" id="usuario" name="usuario" <?php if ($datosPerfil[0]) echo "value='$datosPerfil[0]'" ?>
                     class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500" />
                 <?php
-                if ($error != '') {
+                if (is_string($error)) {
                     echo '<p class="error">' . $error . ' </p>';
                 }
                 ?>
@@ -58,6 +58,13 @@
                 <input type="password" id="password" name="password" class="mt-2 w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5
                     text-white focus:ring-blue-500 focus:border-blue-500" required>
                 </select>
+                <?php
+                if (is_array($error)) {
+                    foreach ($error as $er ) {
+                        echo '<p class="error">' . $er . ' </p>';
+                    }
+                }
+                ?>
             </div>
 
             <!-- Foto de perfil -->
